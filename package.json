@@ -1,0 +1,9 @@
+{
+  "name": "ibiza",
+  "private": true,
+  "dependencies": {
+    "@expo-google-fonts/inter": "0.4.1",
+    "@vercel/blob": "2.9.0",
+    "sharp": "0.34.4"
+  }
+}
