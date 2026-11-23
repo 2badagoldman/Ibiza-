@@ -10,5 +10,5 @@ for (const p of fs.readdirSync('.').filter((f) => /^patches\d*\.json$/.test(f)).
   if (got !== p.sha) { console.error(p.out, 'mismatch', got, p.sha); process.exit(1); }
   fs.writeFileSync('public/' + p.out, s); console.log('built', p.out, got);
 }
-for (const f of ['index.html', 'booth.js', 'analysis.js', 'account.js', 'bg.js', 'studio.js', 'spotify.js', 'app.js', 'controls.js', 'photos.html']) if (fs.existsSync(f) && !fs.existsSync('public/' + f)) fs.copyFileSync(f, 'public/' + f);
+for (const f of ['index.html', 'booth.js', 'analysis.js', 'account.js', 'bg.js', 'studio.js', 'spotify.js', 'app.js', 'controls.js', 'photos.html', 'artists.html', 'artists.js', 'gallery.html', 'privacy.html', 'terms.html']) if (fs.existsSync(f) && !fs.existsSync('public/' + f)) fs.copyFileSync(f, 'public/' + f);
 require('./og.js')('public/og.jpg').catch((e) => console.warn('og image skipped', e));

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Meet the Artists · Ibiza</title>
+<meta name="description" content="Meet the artists on Ibiza: who's on top right now, their stories, their biggest songs and how much they're played on Ibiza.">
+<meta property="og:title" content="Meet the Artists · Ibiza">
+<meta property="og:description" content="Every artist's home on Ibiza: their story, their biggest songs, and a DJ that plays only them.">
+<meta property="og:image" content="https://ibiza-dj.vercel.app/og.jpg?v=2">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png"><link rel="apple-touch-icon" href="/icon-180.png">
+<style>
+:root{color-scheme:dark;--bg:#0b0912;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.1);--txt:#f3eeff;--dim:#b9afd6;--hot:#ff4fa3;--sun:linear-gradient(135deg,#ffd65c,#ff5f6d 45%,#c45cff)}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:-20% -10% auto;height:70vh;background:radial-gradient(60% 60% at 25% 30%,rgba(255,95,109,.28),transparent 70%),radial-gradient(50% 60% at 80% 20%,rgba(124,92,255,.3),transparent 70%);filter:blur(20px);pointer-events:none;z-index:0}
+a{color:inherit}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:14px max(16px,env(safe-area-inset-left));background:rgba(11,9,18,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;letter-spacing:.14em}
+.disc{width:30px;height:30px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(11,9,18,.22) 0 1px,transparent 1px 4px),conic-gradient(#ffd65c,#ff5f6d,#c45cff,#ffd65c);display:grid;place-items:center;animation:spin 6s linear infinite}
+.disc:after{content:"";width:9px;height:9px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px #fff}
+@keyframes spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.disc{animation:none}}
+header .sp{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.btn.go{border:0;background:linear-gradient(135deg,#ff9a3d,#ff3d8b 55%,#7c3cff);box-shadow:0 12px 30px -12px rgba(255,61,139,.9)}
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:28px 16px 80px}
+.hero h1{margin:6px 0 8px;font-size:clamp(38px,7vw,72px);line-height:1;letter-spacing:-.03em;font-weight:900}
+.hero h1 span{background:var(--sun);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:0;color:var(--dim);max-width:640px;font-size:17px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0 18px}
+.search{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;height:50px;padding:0 18px;border-radius:25px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.search input{flex:1;background:none;border:0;outline:0;color:inherit;font:inherit;font-size:16px}
+.tabs{display:flex;gap:6px;padding:4px;border-radius:25px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.tabs button{height:40px;padding:0 16px;border-radius:20px;border:0;background:none;color:var(--dim);font:inherit;font-weight:700;cursor:pointer}
+.tabs button.on{background:rgba(255,255,255,.12);color:var(--txt)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+.card{position:relative;display:block;padding:14px;border-radius:22px;background:var(--card);border:1px solid var(--line);text-decoration:none;cursor:pointer;transition:transform .2s,background .2s,border-color .2s;color:inherit;font:inherit;text-align:left;width:100%}
+.card:hover{transform:translateY(-3px);background:rgba(255,255,255,.08);border-color:rgba(255,79,163,.4)}
+.card img{width:100%;aspect-ratio:1;border-radius:16px;object-fit:cover;background:rgba(255,255,255,.06);display:block}
+.card b{display:block;margin-top:10px;font-size:16px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card small{color:var(--dim);font-size:13px}
+.rank{position:absolute;top:22px;left:22px;min-width:34px;height:34px;padding:0 8px;border-radius:17px;background:rgba(11,9,18,.78);backdrop-filter:blur(6px);display:grid;place-items:center;font-weight:900;font-size:14px}
+.card:nth-child(-n+3) .rank{background:var(--sun);color:#1a0b2e}
+.empty{padding:40px;text-align:center;color:var(--dim)}
+#grid:has(.sec){display:block}
+.allhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:4px 0 14px}.allhead b{font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#ffb38a}.allhead span{color:var(--dim)}
+.jump{position:sticky;top:64px;z-index:5;display:flex;gap:8px;overflow-x:auto;padding:10px 0 12px;margin-bottom:6px;background:linear-gradient(180deg,rgba(11,9,18,.96),rgba(11,9,18,.82));backdrop-filter:blur(12px);scrollbar-width:none}
+.jump::-webkit-scrollbar{display:none}
+.jump a{flex:none;height:36px;display:inline-flex;align-items:center;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--txt);text-decoration:none;font-size:14px;font-weight:600;transition:background .2s,border-color .2s}
+.jump a:hover{background:rgba(255,255,255,.12);border-color:rgba(255,179,138,.5)}
+.sec{margin:26px 0 10px;scroll-margin-top:130px}
+.sech{display:flex;align-items:baseline;gap:12px;margin:0 0 12px}.sech h2{margin:0;font-size:clamp(22px,3vw,30px);letter-spacing:-.02em}.sech small{color:var(--dim)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(140px,15vw,184px);gap:14px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 14px;scrollbar-width:thin}
+.rail .card{scroll-snap-align:start;padding:10px}
+.rail .card img{border-radius:50%;transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s}
+.rail .card:hover img{transform:scale(1.06);filter:saturate(1.15)}
+.rail .card b{text-align:center;font-size:15px}
+.rv{opacity:0;transform:translateY(26px) scale(.985);filter:blur(6px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s}
+.rv.in{opacity:1;transform:none;filter:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;filter:none;transition:none}}
+.profile{display:none}.profile.on{display:block}.list.off{display:none}
+.back{margin-bottom:18px}
+.phero{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:28px;align-items:end;padding:24px;border-radius:28px;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(255,79,163,.12));border:1px solid var(--line)}
+@media(max-width:720px){.phero{grid-template-columns:1fr;text-align:center}.phero img{max-width:240px;margin:0 auto}}
+.phero img{width:100%;aspect-ratio:1;border-radius:24px;object-fit:cover;box-shadow:0 30px 60px -24px rgba(0,0,0,.9)}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.phero h2{margin:6px 0 12px;font-size:clamp(34px,6vw,64px);line-height:1;letter-spacing:-.03em}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+@media(max-width:720px){.stats,.acts{justify-content:center}}
+.stat{padding:8px 14px;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid var(--line)}
+.stat b{display:block;font-size:18px}.stat span{font-size:12px;color:var(--dim)}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.cols{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:22px}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.panel{padding:20px;border-radius:24px;background:var(--card);border:1px solid var(--line)}
+.panel h3{margin:0 0 12px;font-size:18px}
+.bio{color:#ddd5f5;margin:0 0 10px}
+.src{font-size:12px;color:var(--dim)}
+.songs{list-style:none;margin:0;padding:0}
+.songs li{display:grid;grid-template-columns:24px 48px 1fr auto;gap:12px;align-items:center;padding:8px;border-radius:14px}
+.songs li:hover{background:rgba(255,255,255,.05)}
+.songs .no{color:var(--dim);font-weight:700;text-align:right}
+.songs img{width:48px;height:48px;border-radius:10px;object-fit:cover}
+.songs b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.songs small{color:var(--dim)}
+.pl{width:38px;height:38px;border-radius:19px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);cursor:pointer;font-size:14px}
+.pl.on{background:var(--hot);border-color:var(--hot)}
+.rel{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.rel .card{padding:10px;border-radius:18px}.rel .card img{border-radius:50%}.rel .card b{font-size:14px;text-align:center}
+footer{position:relative;z-index:1;text-align:center;color:var(--dim);font-size:13px;padding:0 16px 40px}
+</style></head>
+<body>
+<header><a class="logo" href="/"><span class="disc"></span>IBIZA</a><span class="sp"></span><a class="btn" href="/gallery.html">Gallery</a><a class="btn" href="/">Back to the DJ</a></header>
+<main>
+  <section class="list" id="list">
+    <div class="hero"><div class="kicker">Ibiza</div><h1>Meet the <span>Artists</span></h1>
+    <p>The people behind the music, from the legends to today's biggest names. Read their stories, hear their biggest songs, and start a DJ that plays only them.</p></div>
+    <div class="bar">
+      <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 3a6.5 6.5 0 0 1 5.2 10.4l5.4 5.4-1.4 1.4-5.4-5.4A6.5 6.5 0 1 1 9.5 3zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/></svg><input id="q" type="search" placeholder="Search any artist" autocomplete="off"></label>
+      <div class="tabs" role="tablist"><button class="on" data-tab="all" type="button">All artists</button><button data-tab="world" type="button">Top in the world</button><button data-tab="ibiza" type="button">Most played on Ibiza</button></div>
+    </div>
+    <div class="grid" id="grid"><div class="empty">Loading artists…</div></div>
+  </section>
+  <section class="profile" id="profile"></section>
+</main>
+<footer>Rankings, pictures, fan counts and song previews from Deezer. Artist stories from Wikipedia, under CC BY-SA. Plays on Ibiza are counted for signed-in listeners.</footer>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = (n) => (n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + 'M' : n >= 1e3 ? Math.round(n / 1e3) + 'K' : String(n || 0));
+  // pictures come through Ibiza's own address so they show in every browser
+  const px = (u) => (u && /dzcdn\.net/.test(u) ? '/api/img?u=' + encodeURIComponent(u) : u || '');
+  const dz = async (p, o = {}) => { const r = await fetch('/api/dz?' + new URLSearchParams({ p, ...o })); return r.json(); };
+  let tab = 'all', worldCache = null, db = null, audio = null, playingBtn = null;
+
+  const fbReady = (async () => {
+    try {
+      const cfg = await (await fetch('/api/config')).json();
+      if (!cfg.firebase) return null;
+      const V = '10.12.2';
+      for (const m of ['app', 'firestore']) await new Promise((ok, no) => { const s = document.createElement('script'); s.src = `https://www.gstatic.com/firebasejs/${V}/firebase-${m}-compat.js`; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+      db = window.firebase.initializeApp(cfg.firebase).firestore();
+      return db;
+    } catch { return null; }
+  })();
+  async function playsOf(id) { try { await fbReady; if (!db) return null; const d = await db.collection('plays').doc(String(id)).get(); return d.exists ? d.data().count || 0 : 0; } catch { return null; } }
+
+  const card = (a, i) => `<button class="card" type="button" data-id="${esc(a.id)}">${i != null ? `<span class="rank">${i + 1}</span>` : ''}<img loading="lazy" src="${esc(a.pic)}" alt=""><b>${esc(a.name)}</b><small>${a.plays != null ? fmt(a.plays) + ' plays on Ibiza' : a.fans ? fmt(a.fans) + ' fans' : ''}</small></button>`;
+  const fromDz = (x) => ({ id: String(x.id), name: x.name, pic: px(x.picture_big || x.picture_medium), fans: x.nb_fan || 0 });
+
+  // every DJ's artists, legends first: hundreds of them, each with their own picture, story and biggest songs
+  const SECTIONS = [["Legends",[[259,"Michael Jackson"],[174,"Whitney Houston"],[1878,"Prince"],[290,"Madonna"],[145,"Beyoncé"],[719,"Bob Marley"],[9440,"Fela Kuti"],[166,"Stevie Wonder"],[1154,"Marvin Gaye"],[2059,"Aretha Franklin"],[1125,"Elvis Presley"],[1,"The Beatles"],[412,"Queen"],[1454,"Tina Turner"],[262,"Janet Jackson"],[65,"Mariah Carey"],[167095,"2Pac"],[2519,"The Notorious B.I.G."],[413,"Elton John"],[997,"David Bowie"],[180,"ABBA"],[1450,"Bee Gees"],[3445,"Lionel Richie"],[1622,"James Brown"],[1342,"Ray Charles"],[744,"Nina Simone"],[617,"Frank Sinatra"],[198,"Celine Dion"],[4699,"Diana Ross"],[75332,"The Jackson 5"],[521,"Luther Vandross"],[202,"Sade"],[186,"Phil Collins"],[3098,"George Michael"],[9052,"Amy Winehouse"],[808,"Bob Dylan"],[11,"The Rolling Stones"],[848,"Led Zeppelin"],[860,"Pink Floyd"],[415,"Nirvana"],[8741,"Dolly Parton"],[405,"Johnny Cash"],[248,"Earth, Wind & Fire"],[305,"Kool & The Gang"],[34,"Barry White"],[127408692,"Lauryn Hill"],[206,"Aaliyah"],[27,"Daft Punk"],[293585,"Avicii"],[5644,"Selena"]]],["Hip-Hop",[[167095,"2Pac"],[2519,"The Notorious B.I.G."],[3,"Snoop Dogg"],[763,"Dr. Dre"],[66,"50 Cent"],[1309,"Jay-Z"],[230,"Kanye West"],[13,"Eminem"],[58447102,"Pop Smoke"],[165930,"Future"],[246791,"Drake"],[525046,"Kendrick Lamar"],[4495513,"Travis Scott"],[339209,"J. Cole"],[382937,"Nicki Minaj"],[74309,"Lil Wayne"],[73,"Nas"],[2353,"Ice Cube"],[9,"Outkast"],[91,"Missy Elliott"],[9064930,"Cardi B"],[12816021,"Megan Thee Stallion"],[6853403,"21 Savage"],[398521,"Lil Baby"],[7543848,"Post Malone"],[1194083,"Tyler, The Creator"],[1518490,"A$AP Rocky"],[14456487,"Juice WRLD"],[9822974,"XXXTENTACION"],[51965252,"Doechii"],[59691632,"GloRilla"],[7101343,"Lil Uzi Vert"],[4968870,"Metro Boomin"],[273,"Wu-Tang Clan"],[796,"Busta Rhymes"],[267,"DMX"],[78,"Ludacris"],[2527,"T.I."],[103,"Pharrell Williams"],[359,"Nate Dogg"],[712,"Warren G"],[2605,"Method Man"],[2382,"LL Cool J"],[79236,"Run-DMC"],[7958,"Queen Latifah"],[794,"Lil' Kim"],[3813,"Fat Joe"],[626072,"Big Pun"],[2513,"Mobb Deep"],[12316,"Eazy-E"],[1004,"N.W.A"],[393,"The Game"],[9112,"Rick Ross"],[413596,"Meek Mill"],[1338623,"Jeezy"],[7972,"Gucci Mane"],[110587,"Lil Jon"],[105,"Nelly"],[1590752,"Young Thug"],[4344192,"Gunna"],[3977201,"Lil Durk"],[10002824,"Playboi Carti"],[2934901,"Chief Keef"],[12431462,"King Von"],[11279454,"YoungBoy Never Broke Again"],[49818632,"Polo G"],[13594287,"Roddy Ricch"],[11363014,"DaBaby"],[9093938,"Jack Harlow"],[102426952,"Ice Spice"],[629,"Fugees"],[280,"Salt-N-Pepa"],[1020109,"Black Eyed Peas"],[9662,"Timbaland"],[15383,"Swizz Beatz"],[12096038,"Central Cee"],[11256100,"Dave"],[4841158,"Stormzy"],[432022,"Skepta"]]],["Afrobeats",[[4338602,"Burna Boy"],[3933641,"Wizkid"],[125372,"Davido"],[5259966,"Rema"],[13905711,"Tems"],[110616822,"Ayra Starr"],[2281211,"Tiwa Savage"],[9729060,"2Baba"],[303670,"D'banj"],[51305922,"Asake"],[244614492,"Zaylevelten"],[140278042,"Suono Sai"],[15190997,"Fireboy DML"],[56094992,"Omah Lay"],[903536,"CKay"],[14779157,"Kizz Daniel"],[3744641,"Olamide"],[4694728,"Yemi Alade"],[4674484,"Mr Eazi"],[11888005,"Joeboy"],[61701582,"Victony"],[66693262,"Seyi Vibez"],[131904482,"Shallipopi"],[161314272,"BNXN"],[365797,"Ruger"],[7548984,"Oxlade"],[8791550,"Adekunle Gold"],[120313,"Simi"],[5509507,"Patoranking"],[5242214,"Stonebwoy"],[5109534,"Shatta Wale"],[4101336,"Sarkodie"],[77759992,"Black Sherif"],[9958178,"King Promise"],[5259968,"Diamond Platnumz"],[245438,"Fally Ipupa"],[6165,"Angélique Kidjo"],[299718,"Wande Coal"],[95397,"P-Square"],[567229,"Flavour"],[4848831,"Phyno"]]],["Pop",[[12246,"Taylor Swift"],[384236,"Ed Sheeran"],[429675,"Bruno Mars"],[4050205,"The Weeknd"],[75491,"Lady Gaga"],[564,"Rihanna"],[1562681,"Ariana Grande"],[9635624,"Billie Eilish"],[8706544,"Dua Lipa"],[288166,"Justin Bieber"],[5313805,"Harry Styles"],[75798,"Adele"],[144227,"Katy Perry"],[483,"Britney Spears"],[1147,"Justin Timberlake"],[11152580,"Olivia Rodrigo"],[1176900,"Sabrina Carpenter"],[12436,"Miley Cyrus"],[5962948,"Shawn Mendes"],[3469,"Sia"],[892,"Coldplay"],[1188,"Maroon 5"],[416239,"Imagine Dragons"],[1007876,"One Direction"],[292185,"Selena Gomez"],[5578942,"Doja Cat"],[1462230,"Charli xcx"],[12945219,"Chappell Roan"],[4448485,"Lorde"],[186038,"Pink"],[116,"Christina Aguilera"],[68,"Kelly Clarkson"],[330,"Backstreet Boys"],[785,"Spice Girls"],[64874492,"Gracie Abrams"],[13817211,"Tate McRae"]]],["R&B",[[17,"Usher"],[228,"Alicia Keys"],[5531258,"SZA"],[102,"Chris Brown"],[1350335,"Frank Ocean"],[7397124,"Brent Faiyaz"],[8114447,"H.E.R."],[5245183,"Daniel Caesar"],[14482665,"Summer Walker"],[3841221,"Jhené Aiko"],[104,"Ne-Yo"],[152,"Mary J. Blige"],[1760,"Toni Braxton"],[269,"Brandy"],[2270,"Monica"],[183,"TLC"],[595,"Destiny's Child"],[799,"Boyz II Men"],[2056,"Erykah Badu"],[5004,"D'Angelo"],[313,"John Legend"],[14504705,"Miguel"],[362326,"Khalid"],[48995601,"Giveon"],[13905711,"Tems"],[5603027,"Kehlani"],[11116250,"Ella Mai"],[345052,"Tinashe"],[5000503,"Victoria Monét"],[2619,"Ciara"],[2656,"Keyshia Cole"],[2386,"Jodeci"],[4370,"Anita Baker"],[270,"Babyface"]]],["Igbo & Highlife",[[567229,"Flavour"],[4848831,"Phyno"],[1403651,"Oliver De Coque"],[6677642,"Osita Osadebe"],[255285,"Chief Stephen Osita Osadebe"],[8134536,"Bright Chimezie"],[7530732,"Oriental Brothers International"],[14755151,"Umu Obiligbo"],[207910157,"Zoro"],[1136083,"Kcee"],[1029995,"Mr Raw"],[325624,"Duncan Mighty"],[1208894,"Sound Sultan"],[10753698,"Chiké"],[168275777,"Fave"],[7588686,"Theresa Onuorah"],[1453568,"Prince Nico Mbarga"],[303087,"Celestine Ukwu"],[1267947,"Rex Lawson"]]],["Amapiano",[[8671236,"Kabza De Small"],[8355648,"DJ Maphorisa"],[163177647,"Uncle Waffles"],[15285633,"Tyler ICU"],[11871785,"Focalistic"],[4027440,"Young Stunna"],[68994592,"Kamo Mphela"],[97245202,"Mellow & Sleazy"],[12350516,"Major League DJz"],[62760832,"Musa Keys"],[63716222,"Daliwonga"],[75493502,"Mas Musiq"],[68905302,"Vigro Deep"],[80240272,"DBN Gogo"],[5518313,"Lady Du"],[1220981,"Tyla"],[1317980,"Sha Sha"],[405582,"Toss"],[48940031,"Kelvin Momo"],[81444642,"Busta 929"],[86146412,"Mr JazziQ"],[59526252,"De Mthuda"]]],["Dancehall & Reggae",[[88,"Sean Paul"],[461,"Shaggy"],[100675,"Vybz Kartel"],[377827,"Popcaan"],[254,"Damian Marley"],[512,"Beenie Man"],[10762,"Bounty Killer"],[17008,"Spice"],[10668885,"Shenseea"],[4590320,"Chronic Law"],[8810764,"Skillibeng"],[1432318,"Masicka"],[179215827,"Koffee"],[1562638,"Chronixx"],[1546753,"Protoje"],[7081,"Buju Banton"],[806,"Sizzla"],[5078,"Capleton"],[156229,"Mavado"],[116337,"Busy Signal"],[7065,"Gregory Isaacs"],[7056,"Dennis Brown"],[2326,"Peter Tosh"],[2425,"Jimmy Cliff"],[165,"UB40"],[5871,"Toots and the Maytals"],[2325,"Burning Spear"],[1654286,"Alkaline"],[383528,"Charly Black"],[164002,"Konshens"]]],["Latin & Reggaeton",[[10583405,"Bad Bunny"],[3839,"Daddy Yankee"],[4860761,"J Balvin"],[5297021,"Karol G"],[160,"Shakira"],[4937383,"Ozuna"],[1424602,"Maluma"],[11289472,"Rauw Alejandro"],[7961888,"Anuel AA"],[1166311,"Feid"],[12029862,"Myke Towers"],[554792,"Rosalía"],[15691,"Nicky Jam"],[725,"Don Omar"],[75156,"Wisin & Yandel"],[614223,"Farruko"],[5412407,"Sech"],[4698748,"Becky G"],[1272674,"Romeo Santos"],[700,"Aventura"],[112,"Marc Anthony"],[2789,"Ricky Martin"],[2792,"Enrique Iglesias"],[5002,"Gloria Estefan"],[5024,"Celia Cruz"],[4527779,"Juan Luis Guerra"],[6707,"Luis Fonsi"],[58568762,"Camilo"],[5266156,"Sebastián Yatra"],[139171932,"Young Miko"],[4649104,"Tainy"],[5536564,"Arcángel"],[1020198,"De La Ghetto"],[105047672,"Jhayco"],[12487862,"Bizarrap"]]],["EDM & House",[[12178,"Calvin Harris"],[542,"David Guetta"],[407188,"Swedish House Mafia"],[3968561,"Martin Garrix"],[434,"Tiësto"],[10620,"Armin van Buuren"],[56125,"Fisher"],[76053262,"Fred again.."],[9549148,"Peggy Gou"],[314870,"Black Coffee"],[179975,"Solomun"],[3951,"Carl Cox"],[515476,"Dixon"],[1014142,"Anyma"],[469195,"Keinemusik"],[292296,"&ME"],[262264,"Adam Port"],[1846,"Diplo"],[525643,"Skrillex"],[7890702,"Marshmello"],[4768753,"Kygo"],[1198612,"Zedd"],[1188009,"Alesso"],[3847,"Axwell"],[6822,"Steve Angello"],[175997,"Sebastian Ingrosso"],[30,"Eric Prydz"],[142381,"deadmau5"],[409796,"Disclosure"],[397164,"Duke Dumont"],[1658572,"Purple Disco Machine"],[12170972,"John Summit"],[4740325,"Dom Dolla"],[11799,"Chris Lake"],[76,"Fatboy Slim"],[724,"Benny Benassi"],[157,"Bob Sinclar"],[2005781,"Robin Schulz"],[1429841,"Alok"],[1403694,"Meduza"]]],["Regional Mexican",[[80365122,"Peso Pluma"],[15304117,"Natanael Cano"],[13916083,"Fuerza Regida"],[7201102,"Grupo Frontera"],[54047652,"Junior H"],[14539467,"Carin Leon"],[85874042,"Eslabon Armado"],[153152092,"Xavi"],[7583722,"Gabito Ballesteros"],[9763952,"Christian Nodal"],[8798,"Vicente Fernández"],[71813,"Juan Gabriel"],[13611,"Los Tigres del Norte"],[50683152,"Banda MS"],[9896010,"Grupo Firme"],[1530946,"Calibre 50"],[9032,"Marco Antonio Solís"],[8793,"Pepe Aguilar"],[4028765,"Ángela Aguilar"],[8794,"Alejandro Fernández"],[468783,"Gerardo Ortiz"],[5230088,"El Fantasma"],[14004075,"Luis R Conriquez"],[97125,"Chalino Sánchez"],[147296,"Jenni Rivera"]]],["Soul & Funk",[[166,"Stevie Wonder"],[1154,"Marvin Gaye"],[2369,"Al Green"],[2945,"Otis Redding"],[900,"Sam Cooke"],[2027,"Curtis Mayfield"],[1118,"Bill Withers"],[3536,"Chaka Khan"],[5091,"Rick James"],[909,"Parliament"],[229,"Sly & The Family Stone"],[732,"The Isley Brothers"],[2730,"The Temptations"],[16528,"Smokey Robinson"],[9982,"Gladys Knight"],[2197,"Isaac Hayes"],[10808,"Teddy Pendergrass"],[5451,"The O'Jays"],[3521,"Donna Summer"],[2640,"Chic"],[6474027,"Anderson .Paak"],[7420680,"Leon Bridges"],[125094672,"Silk Sonic"],[7,"Jamiroquai"],[189,"Lenny Kravitz"]]],["Rock",[[412,"Queen"],[92,"Linkin Park"],[566,"Foo Fighters"],[182,"Red Hot Chili Peppers"],[52,"Green Day"],[119,"Metallica"],[115,"AC/DC"],[663,"Guns N' Roses"],[637,"Bon Jovi"],[1005,"Aerosmith"],[897,"The Killers"],[1182,"Arctic Monkeys"],[927,"Oasis"],[399,"Radiohead"],[705,"Muse"],[385,"Kings of Leon"],[169,"Fleetwood Mac"],[210,"Eagles"],[817,"The Who"],[847,"The Doors"],[3381,"Journey"],[10977,"Paramore"],[404,"Fall Out Boy"],[599,"My Chemical Romance"],[458,"System Of A Down"],[98,"Evanescence"],[647650,"Twenty One Pilots"],[569,"The Strokes"],[13612387,"Måneskin"],[338,"Nickelback"]]],["Country",[[7188840,"Morgan Wallen"],[9626504,"Luke Combs"],[71855892,"Zach Bryan"],[343290,"Chris Stapleton"],[827425,"Kane Brown"],[242132,"Luke Bryan"],[4388,"Carrie Underwood"],[3134,"Shania Twain"],[8815,"Garth Brooks"],[5235,"George Strait"],[2735,"Kenny Rogers"],[2947,"Willie Nelson"],[333,"Tim McGraw"],[1459,"Faith Hill"],[8638,"Blake Shelton"],[5057,"Miranda Lambert"],[399990,"Kacey Musgraves"],[7830,"Jason Aldean"],[2144511,"Florida Georgia Line"],[6303698,"Lainey Wilson"],[613934,"Jelly Roll"],[7543848,"Post Malone"],[145,"Beyoncé"],[2021921,"Thomas Rhett"],[3249,"Keith Urban"]]],["K-Pop",[[6982223,"BTS"],[10803980,"BLACKPINK"],[13923487,"Stray Kids"],[161553,"TWICE"],[178008437,"NewJeans"],[240582,"SEVENTEEN"],[113547672,"aespa"],[153042292,"IVE"],[168158797,"LE SSERAFIM"],[113915572,"ENHYPEN"],[5126518,"TXT"],[88684,"EXO"],[65209,"BIGBANG"],[9172904,"Jung Kook"],[168047437,"Jimin"],[11446160,"LISA"],[12131,"ROSÉ"],[1228100,"JENNIE"],[338654,"Red Velvet"],[3649631,"ITZY"],[14853187,"(G)I-DLE"],[49280302,"ATEEZ"],[50306442,"NCT 127"],[398073,"PSY"],[271210292,"KATSEYE"],[259645622,"ILLIT"],[244386532,"BABYMONSTER"],[1377613,"SHINee"],[1310497,"Girls' Generation"],[2810121,"IU"]]],["Gospel",[[295,"Kirk Franklin"],[7141,"CeCe Winans"],[70542502,"Maverick City Music"],[1170236,"Elevation Worship"],[5223,"Hillsong UNITED"],[12661089,"Tasha Cobbs Leonard"],[1812941,"Travis Greene"],[149515,"Donnie McClurkin"],[69999,"Fred Hammond"],[145892,"Marvin Sapp"],[8270,"Yolanda Adams"],[11174,"Mary Mary"],[418432,"Tye Tribbett"],[1717781,"Sinach"],[6863915,"Mercy Chinwo"],[4723918,"Nathaniel Bassey"],[11504513,"Dunsin Oyekan"],[11937789,"Moses Bliss"],[338394,"Frank Edwards"],[8292430,"Ada Ehi"],[2611581,"Joe Mettle"],[606398,"Jonathan McReynolds"],[134128,"Israel Houghton"],[1463433,"William McDowell"],[10143716,"Brandon Lake"]]],["Bollywood & Desi",[[3830821,"Arijit Singh"],[491,"A.R. Rahman"],[98371,"Shreya Ghoshal"],[10587,"Lata Mangeshkar"],[97141,"Kishore Kumar"],[70075,"Sonu Nigam"],[405736,"Atif Aslam"],[129846,"Neha Kakkar"],[1093616,"Badshah"],[1199677,"Diljit Dosanjh"],[76708242,"AP Dhillon"],[6555107,"Karan Aujla"],[12423322,"Sidhu Moose Wala"],[290619,"Pritam"],[7760,"Vishal-Shekhar"],[71794,"Shankar Mahadevan"],[14779,"Sunidhi Chauhan"],[8419888,"Jubin Nautiyal"],[1707057,"Honey Singh"],[1516162,"Anirudh Ravichander"],[492,"Shaan"],[71798,"Udit Narayan"],[76645,"Alka Yagnik"],[8033,"Mohammed Rafi"],[73805,"Asha Bhosle"]]],["Brazilian",[[4390053,"Anitta"],[73396,"Ludmilla"],[50258612,"MC Kevin o Chris"],[1429841,"Alok"],[7068771,"Marília Mendonça"],[3881631,"Jorge & Mateus"],[1541592,"Gusttavo Lima"],[4876653,"Henrique & Juliano"],[5895828,"Zé Neto & Cristiano"],[8647,"Ivete Sangalo"],[232,"Caetano Veloso"],[2077,"Gilberto Gil"],[5168,"João Gilberto"],[4085,"Tom Jobim"],[1606,"Seu Jorge"],[11301722,"Pabllo Vittar"],[11329214,"Matuê"],[45663272,"L7NNON"],[49259572,"MC Ryan SP"],[4611283,"Wesley Safadão"],[50633822,"Pedro Sampaio"],[10286020,"Luísa Sonza"],[262833,"IZA"],[14687,"Djavan"],[4917,"Jorge Ben Jor"]]]];
+  const art = (id, size) => '/api/img?u=' + encodeURIComponent(`https://api.deezer.com/artist/${id}/image?size=${size || 'big'}`);
+  const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  function showAll() {
+    const total = new Set(SECTIONS.flatMap((s) => s[1].map((x) => x[0]))).size;
+    $('#grid').innerHTML = `<div class="allhead"><b>${total} artists</b><span>Legends and today's biggest names from every DJ on Ibiza. Tap anyone for their story and biggest songs.</span></div>
+<nav class="jump">${SECTIONS.map(([t]) => `<a href="#s-${slug(t)}">${esc(t)}</a>`).join('')}</nav>` +
+      SECTIONS.map(([t, list]) => `<section class="sec" id="s-${slug(t)}"><div class="sech"><h2>${esc(t)}</h2><small>${list.length} artists</small></div><div class="rail">${list.map(([id, name]) => `<button class="card" type="button" data-id="${id}"><img loading="lazy" decoding="async" src="${art(id)}" alt=""><b>${esc(name)}</b></button>`).join('')}</div></section>`).join('');
+    reveal();
+  }
+  // cards drift up and sharpen into place as they scroll into view
+  let io = null;
+  function reveal() {
+    if (!('IntersectionObserver' in window)) return;
+    io = io || new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('#grid .sec, #grid > .card').forEach((el) => { el.classList.add('rv'); io.observe(el); });
+  }
+  function show() { return tab === 'all' ? Promise.resolve(showAll()) : tab === 'world' ? showWorld() : showIbiza(); }
+  async function showWorld() {
+    if (!worldCache) { try { worldCache = ((await dz('/chart/0/artists', { limit: 100 })).data || []).map(fromDz); } catch { worldCache = []; } }
+    $('#grid').innerHTML = worldCache.length ? worldCache.map(card).join('') : '<div class="empty">The rankings are busy. Try again in a moment.</div>';
+  }
+  async function showIbiza() {
+    $('#grid').innerHTML = '<div class="empty">Counting plays…</div>';
+    await fbReady;
+    let rows = [];
+    try { if (db) rows = (await db.collection('plays').orderBy('count', 'desc').limit(60).get()).docs.map((d) => ({ id: d.id, name: d.data().name, plays: d.data().count || 0 })); } catch {}
+    if (!rows.length) { $('#grid').innerHTML = '<div class="empty">No plays counted yet. Sign in on Ibiza and press play, and this list fills up.</div>'; return; }
+    await Promise.all(rows.map(async (r) => { try { const a = await dz('/artist/' + r.id); r.pic = px(a.picture_big || a.picture_medium); } catch {} }));
+    if (tab === 'ibiza') $('#grid').innerHTML = rows.map(card).join('');
+  }
+  let qT = null, qN = 0;
+  async function search(q) {
+    const n = ++qN;
+    if (!q) return show();
+    try { const r = await dz('/search/artist', { q, limit: 40 }); if (n === qN) $('#grid').innerHTML = (r.data || []).map((x) => card(fromDz(x))).join('') || '<div class="empty">No artists found.</div>'; } catch {}
+  }
+
+  async function wiki(name) {
+    try {
+      const s = await (await fetch('https://en.wikipedia.org/w/api.php?' + new URLSearchParams({ action: 'query', list: 'search', srsearch: `${name} musician OR singer OR rapper OR band`, srlimit: '5', format: 'json', origin: '*' }))).json();
+      const want = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const hits = (s.query && s.query.search) || [];
+      const pick = hits.find((h) => h.title.toLowerCase().replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '') === want) || hits.find((h) => h.title.toLowerCase().replace(/[^a-z0-9]/g, '').includes(want));
+      if (!pick) return null;
+      const d = await (await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(pick.title.replace(/ /g, '_')))).json();
+      if (!d || d.type === 'disambiguation' || !d.extract) return null;
+      if (!/sing|rap|music|band|song|DJ|produc|record|group|artist|compos/i.test((d.description || '') + ' ' + d.extract.slice(0, 300))) return null;
+      return { text: d.extract, url: d.content_urls && d.content_urls.desktop && d.content_urls.desktop.page };
+    } catch { return null; }
+  }
+
+  async function openArtist(id, push = true) {
+    if (audio) { audio.pause(); audio = null; }
+    $('#list').classList.add('off');
+    const P = $('#profile'); P.classList.add('on'); P.innerHTML = '<div class="empty">Loading…</div>';
+    if (push) history.pushState({ id }, '', '?id=' + encodeURIComponent(id));
+    window.scrollTo(0, 0);
+    let a, top = { data: [] }, rel = { data: [] };
+    try { [a, top, rel] = await Promise.all([dz('/artist/' + id), dz(`/artist/${id}/top`, { limit: 10 }), dz(`/artist/${id}/related`, { limit: 12 })]); } catch {}
+    if (!a || a.error) { P.innerHTML = '<button class="btn back" id="back" type="button">‹ All artists</button><div class="empty">Couldn’t load this artist right now.</div>'; $('#back').onclick = () => history.back(); return; }
+    const rank = (worldCache || []).findIndex((x) => x.id === String(a.id));
+    const djLink = `/?artists=${encodeURIComponent(a.id + ':' + a.name)}`;
+    document.title = `${a.name} · Meet the Artists · Ibiza`;
+    P.innerHTML = `<button class="btn back" id="back" type="button">‹ All artists</button>
+<div class="phero"><img src="${esc(px(a.picture_xl || a.picture_big))}" alt="${esc(a.name)}"><div>
+<div class="kicker">${rank >= 0 ? `No. ${rank + 1} in the world right now` : 'Artist'}</div><h2>${esc(a.name)}</h2>
+<div class="stats"><div class="stat"><b>${fmt(a.nb_fan)}</b><span>fans</span></div><div class="stat"><b>${a.nb_album || 0}</b><span>albums</span></div><div class="stat"><b id="plays">…</b><span>plays on Ibiza</span></div></div>
+<div class="acts"><a class="btn go" href="${esc(djLink)}">Start ${esc(a.name)}’s DJ</a></div></div></div>
+<div class="cols"><div class="panel"><h3>Biggest songs</h3><ul class="songs">${(top.data || []).map((t, i) => `<li><span class="no">${i + 1}</span><img src="${esc(px(t.album && (t.album.cover_big || t.album.cover_medium)))}" alt=""><div><b>${esc(t.title_short || t.title)}</b><small>${esc(t.album && t.album.title)}</small></div>${t.preview ? `<button class="pl" type="button" data-src="${esc(t.preview)}" aria-label="Play a preview of ${esc(t.title_short || t.title)}">▶</button>` : ''}</li>`).join('') || '<li>No songs found.</li>'}</ul></div>
+<div class="panel"><h3>Their story</h3><div id="bio"><p class="bio">Loading…</p></div></div></div>
+${(rel.data || []).length ? `<div class="panel" style="margin-top:22px"><h3>Fans also love</h3><div class="rel">${rel.data.map((x) => card(fromDz(x))).join('')}</div></div>` : ''}`;
+    $('#back').onclick = () => history.back();
+    playsOf(a.id).then((n) => { const el = $('#plays'); if (el) el.textContent = n == null ? '—' : fmt(n); });
+    wiki(a.name).then((w) => { const el = $('#bio'); if (!el) return; el.innerHTML = w ? `<p class="bio">${esc(w.text)}</p><p class="src">From <a href="${esc(w.url)}" target="_blank" rel="noopener">Wikipedia</a>, under CC BY-SA.</p>` : `<p class="bio">${esc(a.name)} has ${fmt(a.nb_fan)} fans and ${a.nb_album || 0} albums out. Their story is coming soon.</p>`; });
+  }
+  function showList() { if (audio) { audio.pause(); audio = null; } $('#profile').classList.remove('on'); $('#list').classList.remove('off'); document.title = 'Meet the Artists · Ibiza'; }
+
+  document.addEventListener('click', (e) => {
+    const c = e.target.closest('.card[data-id]'); if (c) { openArtist(c.dataset.id); return; }
+    const p = e.target.closest('.pl');
+    if (p) {
+      if (playingBtn === p && audio) { audio.pause(); audio = null; p.classList.remove('on'); p.textContent = '▶'; playingBtn = null; return; }
+      if (audio) audio.pause(); if (playingBtn) { playingBtn.classList.remove('on'); playingBtn.textContent = '▶'; }
+      audio = new Audio(p.dataset.src); audio.play().catch(() => {}); playingBtn = p; p.classList.add('on'); p.textContent = '❚❚';
+      audio.onended = () => { p.classList.remove('on'); p.textContent = '▶'; playingBtn = null; };
+    }
+  });
+  document.querySelectorAll('.tabs button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach((x) => x.classList.toggle('on', x === b));
+    tab = b.dataset.tab; $('#q').value = ''; show();
+  }));
+  $('#q').addEventListener('input', (e) => { clearTimeout(qT); const q = e.target.value.trim(); qT = setTimeout(() => search(q), 280); });
+  window.addEventListener('popstate', () => { const id = new URLSearchParams(location.search).get('id'); id ? openArtist(id, false) : showList(); });
+  show().then(() => { const id = new URLSearchParams(location.search).get('id'); if (id) openArtist(id.replace(/\D/g, ''), false); });
+})();
+</script>
+</body></html>

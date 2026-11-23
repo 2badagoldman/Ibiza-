@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ibiza Gallery · Ibiza</title>
+<meta name="description" content="The Ibiza Gallery: the island's clubs, sunsets and legends, always in motion.">
+<meta property="og:title" content="Ibiza Gallery">
+<meta property="og:description" content="The island's clubs, sunsets and legends, always in motion.">
+<meta property="og:image" content="https://ibiza-dj.vercel.app/og.jpg?v=2">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png"><link rel="apple-touch-icon" href="/icon-180.png">
+<style>
+:root{color-scheme:dark;--bg:#07050c;--txt:#f5f0ff;--dim:#b9afd6;--line:rgba(255,255,255,.1);--sun:linear-gradient(135deg,#ffd65c,#ff5f6d 45%,#c45cff)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+header{position:fixed;inset:0 0 auto;z-index:30;display:flex;align-items:center;gap:14px;padding:14px max(16px,env(safe-area-inset-left));background:linear-gradient(180deg,rgba(7,5,12,.92),rgba(7,5,12,0));pointer-events:none}
+header>*{pointer-events:auto}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;font-weight:900;letter-spacing:.14em}
+.disc{width:30px;height:30px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(7,5,12,.22) 0 1px,transparent 1px 4px),conic-gradient(#ffd65c,#ff5f6d,#c45cff,#ffd65c);display:grid;place-items:center;animation:spin 6s linear infinite}
+.disc:after{content:"";width:9px;height:9px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px #fff}
+@keyframes spin{to{transform:rotate(360deg)}}
+header .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:21px;border:1px solid var(--line);background:rgba(255,255,255,.08);backdrop-filter:blur(10px);color:var(--txt);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.title{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:80px 20px calc(26px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(7,5,12,.95),rgba(7,5,12,.6) 55%,rgba(7,5,12,0));pointer-events:none}
+.title h1{margin:0;font-size:clamp(40px,8vw,96px);line-height:.95;letter-spacing:-.04em;font-weight:900}
+.title h1 span{background:var(--sun);-webkit-background-clip:text;background-clip:text;color:transparent}
+.title p{margin:8px 0 0;color:var(--dim);max-width:560px}
+/* the living wall: columns that drift up and down forever */
+.wall{position:fixed;inset:-4vh -2vw;display:flex;gap:14px;padding:0 14px;transform:rotate(-4deg) scale(1.08);transform-origin:center}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;animation:drift var(--dur,120s) linear infinite;will-change:transform}
+.col.rev{animation-direction:reverse}
+.wall:hover .col{animation-play-state:paused}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.tile{position:relative;overflow:hidden;border-radius:22px;background:#140e1f;cursor:zoom-in;box-shadow:0 20px 50px -24px rgba(0,0,0,.9);transition:transform .35s ease,box-shadow .35s}
+.tile:hover{transform:scale(1.03);box-shadow:0 28px 60px -20px rgba(255,61,139,.55);z-index:2}
+.tile img,.tile video{display:block;width:100%;height:100%;object-fit:cover;transform-origin:center;animation:var(--kb) var(--kbd,18s) ease-in-out infinite alternate;animation-delay:var(--kbdel,0s)}
+.tile:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,5,12,.55),transparent 45%);opacity:0;transition:opacity .3s}
+.tile:hover:after{opacity:1}
+.tile b{position:absolute;left:14px;right:14px;bottom:12px;z-index:1;font-size:14px;opacity:0;transform:translateY(6px);transition:all .3s}
+.tile:hover b{opacity:1;transform:none}
+@keyframes kb1{from{transform:scale(1.02)}to{transform:scale(1.16)}}
+@keyframes kb2{from{transform:scale(1.14) translateX(-3%)}to{transform:scale(1.14) translateX(3%)}}
+@keyframes kb3{from{transform:scale(1.18)}to{transform:scale(1.03)}}
+@keyframes kb4{from{transform:scale(1.12) translateY(-3%)}to{transform:scale(1.12) translateY(3%)}}
+@media(max-width:700px){.col:nth-child(n+3){display:none}.wall{transform:rotate(-3deg) scale(1.1)}}
+@media(min-width:1300px){.wall{gap:18px}.col{gap:18px}}
+@media(prefers-reduced-motion:reduce){.col,.tile img{animation:none}}
+/* full-screen show */
+.show{position:fixed;inset:0;z-index:50;display:none;background:#000}
+.show.on{display:block}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:contain;animation:kb1 9s ease-out forwards}
+.slide video.full{width:100%;height:100%;object-fit:contain}
+.slide .blur{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(40px) brightness(.45);animation:none}
+.showbar{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;align-items:center;gap:12px;padding:20px 20px calc(20px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(0,0,0,.8),transparent)}
+.showbar b{flex:1;font-size:18px}
+.showx{position:absolute;top:16px;right:16px;z-index:3}
+.credit{position:fixed;right:16px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:21;font-size:12px;color:var(--dim)}
+.np{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;display:flex;align-items:center;gap:10px;max-width:min(420px,calc(100vw - 32px));padding:8px 14px 8px 8px;border-radius:30px;background:rgba(12,8,20,.82);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 16px 40px -16px rgba(0,0,0,.9)}
+.np img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;animation:spin 6s linear infinite;animation-play-state:paused}
+.np.on img{animation-play-state:running}
+.np div{min-width:0;flex:1}.np small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ffb38a}
+.np b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np button{width:40px;height:40px;border-radius:20px;border:0;background:linear-gradient(135deg,#ff9a3d,#ff3d8b 55%,#7c3cff);color:#fff;font-size:15px;cursor:pointer;flex:none}
+.np[hidden]{display:none}
+@media(max-width:700px){.credit{display:none}}
+.credit a{color:inherit}
+</style></head>
+<body>
+<header><a class="logo" href="/"><span class="disc"></span>IBIZA</a><span class="sp"></span><button class="btn" id="play" type="button">▶ Play the show</button><a class="btn" href="/">Back to the DJ</a></header>
+<div class="wall" id="wall" aria-label="Ibiza photos, always moving"></div>
+<div class="title"><h1>Ibiza <span>Gallery</span></h1><p>The clubs, the sunsets, the legends. Always moving, all day and all night. Tap any picture, or play the show.</p></div>
+<div class="credit">Some photos from Wikimedia Commons · <a href="/photos.html">credits</a></div>
+<div class="show" id="show" role="dialog" aria-label="Ibiza slideshow"><button class="btn showx" id="showx" type="button">Close ×</button><div class="showbar"><b id="showt"></b><button class="btn" id="prev" type="button">‹</button><button class="btn" id="next" type="button">›</button></div></div>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // free-licensed Ibiza photos from Wikimedia Commons (credited on /photos.html)
+  const C = (p, t) => ({ url: '/api/img?u=' + encodeURIComponent(`https://upload.wikimedia.org/wikipedia/commons/thumb/${p}/960px-${p.split('/').pop()}`), title: t, w: 960, h: 640 });
+  const COMMONS = [
+    C('7/71/O_Beach_Ibiza.jpg', 'O Beach Ibiza'), C('f/f1/Ibiza_Rocks_2019.jpg', 'Ibiza Rocks'),
+    C('1/11/Pukka_Up_boat_party-Ibiza_Spain-Andres_Larin.jpg', 'Boat party off Ibiza'), C('6/6f/O_Beach_Ibiza-Ibiza_Spain-Andres_Larin.jpg', 'Pool party at O Beach'),
+    C('c/c3/Ibiza_Sunset_-_4.jpg', 'Ibiza sunset'), C('1/16/CAFE_MAMBO_.jpg', 'Café Mambo, San Antonio'),
+    C('2/20/2015_Ibiza_sunset1.jpg', 'Sunset over the sea'), C('9/94/Es_Vedr%C3%A0_i_es_Vedranell_2020-07-31.jpg', 'Es Vedrà'),
+  ];
+  let items = [];
+  const isVid = (it) => /^video\//.test(it.type || '');
+  // a video plays silently on a loop, like a living photo; a photo is a plain picture
+  const media = (it, extra = '', cls = '') => isVid(it)
+    ? `<video ${cls ? `class="${cls}"` : ''} src="${esc(it.url)}" muted autoplay loop playsinline preload="metadata" aria-label="${esc(it.title)}"></video>`
+    : `<img ${cls ? `class="${cls}"` : ''} ${extra} src="${esc(it.url)}" alt="${cls ? '' : esc(it.title)}">`;
+  const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((x) => x[1]);
+  function build() {
+    const wall = $('#wall');
+    const n = innerWidth < 700 ? 2 : innerWidth < 1100 ? 3 : innerWidth < 1500 ? 4 : 5;
+    const cols = Array.from({ length: n }, () => []);
+    shuffle(items).forEach((it, i) => cols[i % n].push(it));
+    const kb = ['kb1', 'kb2', 'kb3', 'kb4'];
+    wall.innerHTML = cols.map((list, c) => {
+      while (list.length < 6) list.push(...list.slice(0, 6 - list.length)); // enough to fill the screen
+      const tiles = list.map((it) => `<div class="tile" data-i="${items.indexOf(it)}" style="aspect-ratio:${it.w && it.h ? it.w + '/' + it.h : '4/5'};--kb:${kb[Math.floor(Math.random() * 4)]};--kbd:${14 + Math.round(Math.random() * 12)}s;--kbdel:-${Math.round(Math.random() * 20)}s">${media(it, 'loading="lazy" decoding="async"')}<b>${esc(it.title)}</b></div>`).join('');
+      // the column holds its tiles twice, so the drift loops without a seam
+      return `<div class="col${c % 2 ? ' rev' : ''}" style="--dur:${90 + c * 17 + Math.round(Math.random() * 30)}s">${tiles}${tiles}</div>`;
+    }).join('');
+  }
+  // the full-screen show: crossfades, slow zooms, a new picture every 6 seconds
+  let si = 0, sT = null;
+  function slide(i) {
+    si = (i + items.length) % items.length;
+    const it = items[si], show = $('#show');
+    const el = document.createElement('div'); el.className = 'slide';
+    el.innerHTML = isVid(it) ? `<video class="full" src="${esc(it.url)}" muted autoplay loop playsinline></video>` : `<img class="blur" src="${esc(it.url)}" alt=""><img src="${esc(it.url)}" alt="${esc(it.title)}">`;
+    show.insertBefore(el, show.firstChild);
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('on')));
+    const old = [...show.querySelectorAll('.slide')].filter((x) => x !== el);
+    setTimeout(() => old.forEach((x) => x.remove()), 1500);
+    $('#showt').textContent = it.title;
+    clearTimeout(sT); sT = setTimeout(() => slide(si + 1), isVid(it) ? 15000 : 6000);
+  }
+  function open(i) { $('#show').classList.add('on'); slide(i); }
+  function close() { $('#show').classList.remove('on'); clearTimeout(sT); document.querySelectorAll('.slide').forEach((x) => x.remove()); }
+  $('#wall').addEventListener('click', (e) => { const t = e.target.closest('.tile'); if (t) open(+t.dataset.i); });
+  $('#play').addEventListener('click', () => open(Math.floor(Math.random() * items.length)));
+  $('#showx').addEventListener('click', close);
+  $('#prev').addEventListener('click', () => slide(si - 1));
+  $('#next').addEventListener('click', () => slide(si + 1));
+  document.addEventListener('keydown', (e) => { if (!$('#show').classList.contains('on')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') slide(si + 1); if (e.key === 'ArrowLeft') slide(si - 1); });
+  let rT = null; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(build, 300); });
+  // ---------- the Ibiza DJ plays while you look: Ibiza anthems, 30-second cuts blended back to back, on repeat ----------
+  (() => {
+    const dz = async (p, o = {}) => (await fetch('/api/dz?' + new URLSearchParams({ p, ...o }))).json();
+    const decks = [new Audio(), new Audio()];
+    decks.forEach((a) => { a.preload = 'auto'; a.volume = 0; });
+    let list = [], li = 0, live = -1, on = false, blocked = false, fadeT = null, busy = false;
+    const np = document.createElement('div'); np.className = 'np'; np.hidden = true;
+    np.innerHTML = '<img alt=""><div><small>Ibiza DJ</small><b>Loading the Ibiza mix…</b></div><button type="button" aria-label="Play">▶</button>';
+    document.body.appendChild(np);
+    const btn = np.querySelector('button');
+    const show = (t) => { np.hidden = false; if (t) { np.querySelector('b').textContent = `${t.title} · ${t.artist}`; np.querySelector('img').src = t.cover || ''; } np.classList.toggle('on', on); btn.textContent = on ? '❚❚' : '▶'; btn.setAttribute('aria-label', on ? 'Pause' : 'Play'); };
+    const fade = (a, to, ms) => new Promise((ok) => { const from = a.volume, t0 = performance.now(); const step = () => { const x = Math.min(1, (performance.now() - t0) / ms); a.volume = Math.max(0, Math.min(1, from + (to - from) * x)); if (x < 1) requestAnimationFrame(step); else ok(); }; step(); });
+    async function loadInto(a) {
+      for (let tries = 0; tries < 6; tries++) {
+        const t = list[li++ % list.length];
+        try { const d = await dz('/track/' + t.id); if (!d || !d.preview) continue; a.src = '/api/audio?u=' + encodeURIComponent(d.preview); a.load(); return t; } catch {}
+      }
+      return null;
+    }
+    async function next() {
+      if (busy || !list.length) return; busy = true;
+      try {
+        const nxt = live < 0 ? 0 : 1 - live, a = decks[nxt];
+        const t = await loadInto(a); if (!t) return;
+        a.volume = 0;
+        try { await a.play(); } catch { blocked = true; on = false; show(t); np.querySelector('b').textContent = 'Tap anywhere to play the Ibiza DJ mix'; return; }
+        blocked = false; on = true; show(t);
+        const old = live < 0 ? null : decks[live]; live = nxt;
+        fade(a, 0.9, 3500);
+        if (old) { await fade(old, 0, 3500); old.pause(); }
+      } finally { busy = false; }
+    }
+    // mix into the next anthem about 5 seconds before this one ends; the set loops forever
+    setInterval(() => { if (!on || live < 0) return; const a = decks[live]; if (a.duration && a.currentTime > a.duration - 5) next(); }, 500);
+    decks.forEach((a) => a.addEventListener('ended', () => { if (on && decks[live] === a) next(); }));
+    btn.addEventListener('click', (e) => { e.stopPropagation(); if (on) { on = false; decks.forEach((a) => a.pause()); show(); } else if (live < 0 || blocked) { next(); } else { on = true; decks[live].play().catch(() => {}); show(); } });
+    const kick = () => { if (blocked) next(); };
+    ['pointerdown', 'keydown'].forEach((ev) => addEventListener(ev, kick, { capture: true }));
+    (async () => {
+      const seen = new Set(), out = [];
+      for (const q of ['Ibiza Classics', 'Ibiza Anthems', 'Ibiza House']) {
+        try {
+          const r = await dz('/search/playlist', { q, limit: 10 });
+          const pl = (r.data || []).find((x) => x.nb_tracks >= 25 && /ibiza/i.test(x.title));
+          if (!pl) continue;
+          const tr = await dz(`/playlist/${pl.id}/tracks`, { limit: 100 });
+          for (const t of tr.data || []) if (t.preview && !seen.has(t.id)) { seen.add(t.id); out.push({ id: t.id, title: t.title_short || t.title, artist: t.artist && t.artist.name, cover: t.album && t.album.cover_medium ? '/api/img?u=' + encodeURIComponent(t.album.cover_medium) : '' }); }
+        } catch {}
+        if (out.length >= 150) break;
+      }
+      list = out.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((x) => x[1]);
+      if (list.length) next();
+    })();
+  })();
+
+  fetch('/api/gallery').then((r) => r.json()).catch(() => ({ items: [] })).then((d) => {
+    items = (d.items || []).filter((x) => /^(image|video)\//.test(x.type || 'image/jpeg')).concat(COMMONS);
+    build();
+  });
+})();
+</script>
+</body></html>
