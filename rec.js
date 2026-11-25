@@ -18,11 +18,14 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
 
 (async () => {
   let chromium, puppeteer, ffmpeg, put;
+  process.env.AWS_EXECUTION_ENV = process.env.AWS_EXECUTION_ENV || 'AWS_Lambda_nodejs22.x';
+  process.env.AWS_LAMBDA_JS_RUNTIME = process.env.AWS_LAMBDA_JS_RUNTIME || 'nodejs22.x';
   try {
     chromium = require('@sparticuz/chromium'); puppeteer = require('puppeteer-core');
     ffmpeg = require('ffmpeg-static'); ({ put } = require('@vercel/blob'));
   } catch (e) { log('deps', e.message); save(); return; }
   const hasBlob = !!process.env.BLOB_READ_WRITE_TOKEN; log('blob token present:', hasBlob);
+  try { await chromium.font('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoColorEmoji.ttf'); log('emoji font ok'); } catch (e) { log('emoji font', e.message); }
   let browser;
   const launch = async () => {
     browser = await puppeteer.launch({
