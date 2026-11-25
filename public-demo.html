@@ -211,7 +211,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:
     tapT = setTimeout(() => { if (s.v.paused) { s.v.play().catch(() => {}); s.el.classList.remove('paused'); } else { s.v.pause(); s.el.classList.add('paused'); } }, 300);
   });
   async function share(s) {
-    const url = location.origin + '/demo#' + s.c.id, text = `${s.c.title} on Ibiza, the free AI DJ`;
+    const url = location.origin + '/demo.html#' + s.c.id, text = `${s.c.title} on Ibiza, the free AI DJ`;
     try { if (navigator.share) { await navigator.share({ title: 'Ibiza', text, url }); return; } } catch { return; }
     try { await navigator.clipboard.writeText(url); toast('Link copied'); } catch { toast(url); }
   }
