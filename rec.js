@@ -25,7 +25,7 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
     ffmpeg = require('ffmpeg-static'); ({ put } = require('@vercel/blob'));
   } catch (e) { log('deps', e.message); save(); return; }
   const hasBlob = !!process.env.BLOB_READ_WRITE_TOKEN; log('blob token present:', hasBlob);
-  try { await chromium.font('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoColorEmoji.ttf'); log('emoji font ok'); } catch (e) { log('emoji font', e.message); }
+  try { fs.mkdirSync('/tmp/fonts', { recursive: true }); const r = await fetch('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoColorEmoji.ttf'); fs.writeFileSync('/tmp/fonts/NotoColorEmoji.ttf', Buffer.from(await r.arrayBuffer())); log('emoji font', r.status, fs.statSync('/tmp/fonts/NotoColorEmoji.ttf').size); } catch (e) { log('emoji font', String(e)); }
   let browser;
   const launch = async () => {
     browser = await puppeteer.launch({
@@ -38,7 +38,7 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
   async function newPage() {
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36');
-    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: +(process.env.REC_DPR || 1.5), isMobile: true, hasTouch: true });
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]);
     page.on('pageerror', (e) => log('  pageerror', String(e.message).slice(0, 160)));
     page.setDefaultTimeout(30000);
@@ -87,7 +87,7 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
     const cdp = await page.target().createCDPSession();
     const frames = [];
     cdp.on('Page.screencastFrame', async (f) => { frames.push({ t: f.metadata.timestamp, d: f.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch {} });
-    await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 72, maxWidth: 780, maxHeight: 1688, everyNthFrame: 1 });
+    await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 72, maxWidth: 600, maxHeight: 1300, everyNthFrame: 1 });
     const t0 = Date.now() / 1000;
     try { if (during) await Promise.race([during(), wait(secs * 1000 + 4000)]); } catch (e) { log('  during err', e.message); }
     const left = secs - (Date.now() / 1000 - t0); if (left > 0) await wait(left * 1000);
@@ -104,7 +104,7 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
     execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-i', mp4, '-vf', `fps=${(5 / secs).toFixed(3)},scale=200:-2,tile=5x1`, '-frames:v', '1', '-q:v', '6', sheet]);
     fs.writeFileSync(sheet + '.b64.txt', fs.readFileSync(sheet).toString('base64'));
     fs.rmSync(dir, { recursive: true, force: true });
-    const out = { id, frames: frames.length, secs: +(tEnd - t0).toFixed(1), bytes: fs.statSync(mp4).size };
+    const out = { id, fps: +(frames.length / (tEnd - t0)).toFixed(1), frames: frames.length, secs: +(tEnd - t0).toFixed(1), bytes: fs.statSync(mp4).size };
     if (hasBlob) {
       const a = await put(`demo/${RUN}/${id}.mp4`, fs.readFileSync(mp4), { access: 'public', contentType: 'video/mp4', addRandomSuffix: false, allowOverwrite: true });
       const b = await put(`demo/${RUN}/${id}.jpg`, fs.readFileSync(jpg), { access: 'public', contentType: 'image/jpeg', addRandomSuffix: false, allowOverwrite: true });
@@ -155,6 +155,8 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
     try { await page.close(); } catch {}
     save();
   }
-  try { await browser.close(); } catch {}
   manifest.done = new Date().toISOString(); save();
-})().catch((e) => { log('fatal', e.stack); save(); });
+  await Promise.race([browser.close().catch(() => {}), wait(5000)]);
+  process.exit(0);
+})().catch((e) => { log('fatal', e.stack); save(); process.exit(0); });
+setTimeout(() => { log('global timeout'); save(); process.exit(0); }, 38 * 60 * 1000).unref();
