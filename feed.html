@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ibiza · For You</title>
+<meta name="description" content="Swipe through every Ibiza AI DJ feature, recorded live, plus what's coming next.">
+<meta name="theme-color" content="#07060c">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--bg:#07060c;--fg:#fff;--dim:rgba(255,255,255,.72);--hot:#ff2d6f;--gold:#ffcf3f;--glass:rgba(255,255,255,.1);--line:rgba(255,255,255,.18);--w:min(100vw,calc(100dvh * .5625))}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,"Segoe UI",Roboto,system-ui,sans-serif;overflow:hidden;overscroll-behavior:none}
+#bgblur{position:fixed;inset:-40px;background:center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.3);transition:background-image .6s;z-index:0}
+#feed{position:relative;z-index:1;height:100dvh;width:var(--w);margin:0 auto;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;overscroll-behavior:contain}
+#feed::-webkit-scrollbar{display:none}
+.slide{position:relative;height:100dvh;width:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:#000}
+.slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.slide .shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 18%,transparent 55%,rgba(0,0,0,.78))}
+.top{position:fixed;z-index:5;top:0;left:50%;transform:translateX(-50%);width:var(--w);padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 0;display:flex;align-items:center;gap:10px;pointer-events:none}
+.top a.logo{pointer-events:auto;display:flex;align-items:center;gap:7px;color:#fff;text-decoration:none;font-weight:900;letter-spacing:.06em;font-size:15px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.top a.logo i{width:24px;height:24px;border-radius:50%;background:repeating-radial-gradient(circle,#111 0 2px,#2a2a2a 2px 3px);box-shadow:0 0 0 2px rgba(255,255,255,.3);position:relative;animation:spin 2.4s linear infinite}
+.top a.logo i::after{content:"";position:absolute;inset:8px;border-radius:50%;background:linear-gradient(135deg,#ff9a3d,#ff2d6f)}
+.tabs{pointer-events:auto;margin:0 auto;display:flex;gap:14px;font-weight:700;font-size:15px;white-space:nowrap}
+.tabs button{all:unset;cursor:pointer;color:rgba(255,255,255,.62);padding:6px 0;position:relative;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.tabs button.on{color:#fff}
+.tabs button.on::after{content:"";position:absolute;left:30%;right:30%;bottom:0;height:3px;border-radius:2px;background:#fff}
+.top .sp{width:72px}
+.prog{position:absolute;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 6px);height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden;z-index:3}
+.prog b{display:block;height:100%;width:0;background:#fff;border-radius:2px}
+.cap{position:absolute;left:14px;right:82px;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);z-index:3;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font:800 10.5px/1 inherit;letter-spacing:.14em;background:rgba(61,220,151,.18);border:1px solid rgba(61,220,151,.5);color:#9ff5cb;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.tag i{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:blink 1.2s infinite}
+.tag.soon{background:rgba(255,207,63,.16);border-color:rgba(255,207,63,.55);color:#ffe08a}
+.cap h2{margin:8px 0 4px;font-size:21px;font-weight:850;letter-spacing:-.02em;line-height:1.15}
+.cap p{margin:0;font-size:14px;line-height:1.4;color:var(--dim)}
+.cap .why{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--gold)}
+.cap .song{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:12.5px;color:rgba(255,255,255,.85);white-space:nowrap;overflow:hidden}
+.cap .song span{overflow:hidden;text-overflow:ellipsis}
+.cap .song svg{flex:none;width:14px;height:14px;animation:spin 3s linear infinite}
+.cap .cta{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:11px 18px;border-radius:999px;border:0;background:linear-gradient(135deg,#ff9a3d,#ff2d6f);color:#fff;font:800 14px/1 inherit;text-decoration:none;box-shadow:0 10px 28px -8px rgba(255,45,111,.7);cursor:pointer}
+.cap .cta.soon{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:none}
+.cap .cta.done{background:rgba(61,220,151,.25);border:1px solid rgba(61,220,151,.6)}
+.rail{position:absolute;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 30px);z-index:3;display:flex;flex-direction:column;align-items:center;gap:18px}
+.rail button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font:700 12px/1 inherit;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.rail .ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.rail svg{width:28px;height:28px;fill:#fff;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));transition:transform .25s cubic-bezier(.2,.9,.3,1.5)}
+.rail .lv.on svg{fill:var(--hot)}
+.rail .lv.pop svg{animation:pop .5s cubic-bezier(.17,.89,.32,1.28)}
+.big{position:absolute;z-index:4;width:120px;height:120px;margin:-60px 0 0 -60px;pointer-events:none;animation:big .9s cubic-bezier(.17,.89,.32,1.2) forwards}
+.big svg{width:100%;height:100%;filter:drop-shadow(0 10px 30px rgba(255,45,111,.6))}
+.paused::after{content:"";position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%;background:rgba(0,0,0,.35) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z'/%3E%3C/svg%3E") center/40px no-repeat;z-index:2;pointer-events:none}
+.hint{position:fixed;z-index:6;left:50%;bottom:110px;transform:translateX(-50%);padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.12);border:.5px solid rgba(255,255,255,.3);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);font-weight:700;font-size:13.5px;display:flex;gap:8px;align-items:center;pointer-events:none;animation:hint 3s ease forwards}
+.hint b{display:inline-block;animation:swipe 1s ease-in-out infinite}
+.toast{position:fixed;z-index:7;left:50%;top:calc(env(safe-area-inset-top,0px) + 58px);transform:translateX(-50%);padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.1);border:.5px solid rgba(255,255,255,.25);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);font-weight:600;font-size:13.5px;white-space:nowrap;pointer-events:none;animation:toast 3s ease forwards;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{50%{opacity:.3}}
+@keyframes pop{0%{transform:scale(1)}20%{transform:scale(.7)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+@keyframes big{0%{opacity:0;transform:scale(.2) rotate(-12deg)}25%{opacity:1;transform:scale(1.15)}45%{transform:scale(.95)}60%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:scale(.9) translateY(-50px)}}
+@keyframes hint{0%{opacity:0}12%{opacity:1}85%{opacity:1}100%{opacity:0}}
+@keyframes swipe{0%,100%{transform:translateY(4px)}50%{transform:translateY(-6px)}}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,-8px)}10%{opacity:1;transform:translate(-50%,0)}85%{opacity:1}100%{opacity:0}}
+@media (min-width:700px){#feed{border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}}
+@media (prefers-reduced-motion:reduce){.top a.logo i,.cap .song svg,.tag i{animation:none}}
+</style>
+</head>
+<body>
+<div id="bgblur"></div>
+<div class="top">
+  <a class="logo" href="/" aria-label="Back to Ibiza"><i></i>IBIZA</a>
+  <nav class="tabs" role="tablist">
+    <button type="button" data-f="all" class="on" role="tab">For You</button>
+    <button type="button" data-f="live" role="tab">Live</button>
+    <button type="button" data-f="soon" role="tab">Coming soon</button>
+  </nav>
+  <span class="sp"></span>
+</div>
+<main id="feed" aria-label="Ibiza features feed"></main>
+<script>
+/* Ibiza "For You" demo feed (Nov 25 2026).
+   Every LIVE clip is a real screen recording of ibizadj.app on a phone (no sound, so no copyright issue).
+   COMING SOON clips show invented AI DJ ideas drawn over the real, running app.
+   The order is an engagement algorithm, like a For You page: watch time, loves, rewatches and "Try it" taps
+   score each clip and its topics, and the feed re-ranks what comes next after every swipe. Kept on this device only. */
+(() => {
+  'use strict';
+  const CLIPS = /*CLIPS*/[{"id": "home", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/home.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/home.jpg", "title": "Welcome to Ibiza", "desc": "Pick a DJ and the party starts. Every genre, every vibe, one tap.", "tags": ["explore", "dj"], "soon": false, "cta": "/", "song": "", "p": 1.6}, {"id": "decks", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/decks.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/decks.jpg", "title": "Two decks. One AI DJ.", "desc": "Real turntables spin, the mixer moves, keys match. The AI DJ mixes live in front of you.", "tags": ["dj", "visual"], "soon": false, "cta": "/?pick=ibiza", "song": "Better Off Alone · Alice Deejay", "p": 1.8}, {"id": "djmenu", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/djmenu.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/djmenu.jpg", "title": "Switch DJs in a swipe", "desc": "Pop, Afrobeats, Amapiano, Hip-hop and more. Each DJ has its own crate and voice.", "tags": ["dj", "explore"], "soon": false, "cta": "/", "song": "Go Again · Zaylevelten", "p": 1.3}, {"id": "sara", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/sara.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/sara.jpg", "title": "DJ Sara, Habesha nights", "desc": "Ethiopian hits mixed by DJ Sara, who speaks in her own voice.", "tags": ["dj", "africa"], "soon": false, "cta": "/?pick=habesha", "song": "Anteye · Aster Aweke", "p": 1.3}, {"id": "loves", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/loves.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/loves.jpg", "title": "Send love to the song", "desc": "Tap the heart and the screen floats with love. Your taste trains the DJ.", "tags": ["social", "party"], "soon": false, "cta": "/?pick=afrobeats", "song": "IKEBE 3000 · Blaqbonez", "p": 1.2}, {"id": "reactions", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/reactions.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/reactions.jpg", "title": "React like you're in the crowd", "desc": "🔥 😂 👍 go full screen, like a real dance floor.", "tags": ["social", "party"], "soon": false, "cta": "/?pick=hiphop", "song": "CTRL · Kashcoming", "p": 1.3}, {"id": "bell", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/bell.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/bell.jpg", "title": "Your activity bell", "desc": "Loves, shares and new drops in one clean list.", "tags": ["social"], "soon": false, "cta": "/?pick=rnb", "song": "TEXAS HOLD 'EM · Beyoncé", "p": 0.9}, {"id": "christmas", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/christmas.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/christmas.jpg", "title": "Christmas DJ", "desc": "2,000+ holiday songs, snow falling and a surprise from Santa.", "tags": ["holiday", "visual"], "soon": false, "cta": "/?pick=christmas", "song": "It's Beginning to Look a Lot Like Christmas · Michael Bublé", "p": 1.4}, {"id": "aiblends", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/aiblends.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/aiblends.jpg", "title": "22 AI blends", "desc": "Two songs, one new track. Ibiza's AI blends them live in Blend Studio.", "tags": ["ai", "studio"], "soon": false, "cta": "/#aiblend=2", "song": "Laho II × Dumebi", "p": 1.5}, {"id": "upnext", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/upnext.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/upnext.jpg", "title": "See what's up next", "desc": "The queue the AI DJ is building for you, song by song.", "tags": ["dj", "explore"], "soon": false, "cta": "/?pick=amapiano", "song": "Kwela · Uncle Waffles", "p": 1.0}, {"id": "mydj", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/mydj.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/mydj.jpg", "title": "My DJ: you on the decks", "desc": "Pro decks in your pocket. Take over from the AI any time.", "tags": ["studio", "dj"], "soon": false, "cta": "/mydj", "song": "", "p": 1.4}, {"id": "gallery", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/gallery.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/gallery.jpg", "title": "The Ibiza gallery", "desc": "Hundreds of party photos that move with the music.", "tags": ["visual", "explore"], "soon": false, "cta": "/gallery.html", "song": "", "p": 0.9}, {"id": "artists", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/artists.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/artists.jpg", "title": "585 artist stories", "desc": "Bios for the stars behind every song.", "tags": ["explore"], "soon": false, "cta": "/artists.html", "song": "", "p": 0.8}, {"id": "enter", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/enter.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/enter.jpg", "title": "Plan your Ibiza trip", "desc": "Clubs, beaches and nights out, all in one trip planner.", "tags": ["explore", "party"], "soon": false, "cta": "/enter.html", "song": "", "p": 0.9}, {"id": "brain", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/brain.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/brain.jpg", "title": "The AI brain", "desc": "The agent swarm that keeps making every DJ smarter.", "tags": ["ai"], "soon": false, "cta": "/brain.html", "song": "", "p": 1.0}, {"id": "cx-sunset", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-sunset.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-sunset.jpg", "title": "Sunset Drop", "desc": "The biggest drop of the night lands on the exact minute the sun sets where you are.", "tags": ["soon", "ai", "party"], "soon": true, "cta": "", "song": "Call on Me · Eric Prydz", "p": 1.5}, {"id": "cx-party", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-party.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-party.jpg", "title": "Party Room", "desc": "Friends scan a QR code, vote the next song and push the crossfader together.", "tags": ["soon", "social", "party"], "soon": true, "cta": "", "song": "CTRL · Kashcoming", "p": 1.5}, {"id": "cx-crowdcam", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-crowdcam.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-crowdcam.jpg", "title": "Crowd Cam", "desc": "The camera reads the dance floor on your phone, and the DJ speeds up when people move.", "tags": ["soon", "ai", "party"], "soon": true, "cta": "", "song": "Sandstorm · Darude", "p": 1.3}, {"id": "cx-dedicate", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-dedicate.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-dedicate.jpg", "title": "Dedications", "desc": "The DJ gives your friend a shout-out on air, and they get a ping.", "tags": ["soon", "social"], "soon": true, "cta": "", "song": "DENIAL IS A RIVER · Doechii", "p": 1.2}, {"id": "cx-battle", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-battle.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-battle.jpg", "title": "DJ Battle", "desc": "Two AI DJs go head to head. The crowd votes the winner.", "tags": ["soon", "dj", "party"], "soon": true, "cta": "", "song": "No Matta Me · Lady Saw", "p": 1.2}, {"id": "cx-hum", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-hum.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-hum.jpg", "title": "Hum it in", "desc": "Hum a tune and the DJ finds it and drops it next.", "tags": ["soon", "ai"], "soon": true, "cta": "", "song": "Good Luck, Babe! · Chappell Roan", "p": 1.1}, {"id": "cx-reel", "url": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-reel.mp4", "poster": "https://60l8bbq517cibdth.public.blob.vercel-storage.com/demo/v202611250630/cx-reel.jpg", "title": "Your Night reel", "desc": "A 15-second video of your set, ready to post when the music stops.", "tags": ["soon", "social", "visual"], "soon": true, "cta": "", "song": "Doses & Mimosas · Vintage Culture", "p": 1.2}]/*END*/;
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const HEART = 'M12 21s-7.5-4.6-9.6-9.2C.9 8.6 2.9 5 6.4 5c2 0 3.4 1.1 4.1 2.3h3c.7-1.2 2.1-2.3 4.1-2.3 3.5 0 5.5 3.6 4 6.8C19.5 16.4 12 21 12 21z';
+
+  // ---------- what this viewer likes (this device only) ----------
+  const KEY = 'ibz_demo_v1';
+  let M = {}; try { M = JSON.parse(localStorage.getItem(KEY)) || {}; } catch {}
+  M.c = M.c || {}; M.t = M.t || {}; M.n = M.n || 0;
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch {} };
+  const st = (id) => M.c[id] || (M.c[id] = { v: 0, w: 0, f: 0, l: 0, k: 0, s: 0, last: 0 });
+  const bump = (clip, x) => { for (const t of clip.tags) M.t[t] = Math.max(-3, Math.min(8, (M.t[t] || 0) + x)); };
+
+  // score: how much this viewer will want this clip next
+  function score(c) {
+    const s = st(c.id);
+    let x = c.p || 1;                                            // editor's pick weight
+    x += c.tags.reduce((a, t) => a + (M.t[t] || 0), 0) * 0.45;    // topics you watch, love and tap
+    if (s.v) x += (s.w / s.v) * 1.2 + s.l * 1.6 + s.k * 1.2 - s.s * 0.9; // this clip's own history
+    if (!s.v) x += 1.1;                                          // freshness: never seen
+    const since = M.n - s.last; if (s.v && since < 6) x -= (6 - since) * 0.8; // just watched it
+    x += Math.random() * 0.9;                                    // a little exploration
+    return x;
+  }
+  function why(c) {
+    const s = st(c.id);
+    const top = c.tags.map((t) => [t, M.t[t] || 0]).sort((a, b) => b[1] - a[1])[0];
+    if (s.l) return 'You loved this';
+    if (top && top[1] >= 1.5) return 'Because you watch ' + (TAGN[top[0]] || top[0]);
+    if (!s.v && c.soon) return 'New idea';
+    return '';
+  }
+  const TAGN = { dj: 'DJ sets', party: 'party features', visual: 'visual moments', ai: 'AI features', social: 'social features', africa: 'African DJs', holiday: 'holiday vibes', studio: 'the studio', explore: 'exploring', kids: 'family features', soon: 'new ideas' };
+
+  // ---------- build the feed ----------
+  const feed = $('#feed');
+  let filter = 'all', order = [], slides = [], cur = -1;
+  const pool = () => CLIPS.filter((c) => filter === 'all' || (filter === 'soon' ? c.soon : !c.soon));
+  function rank(list) { return list.map((c) => [c, score(c)]).sort((a, b) => b[1] - a[1]).map((x) => x[0]); }
+  function slideHTML(c) {
+    return `<video playsinline muted loop preload="none" poster="${esc(c.poster)}" data-src="${esc(c.url)}"></video><div class="shade"></div>
+      <div class="cap"><span class="tag${c.soon ? ' soon' : ''}"><i></i>${c.soon ? 'COMING SOON' : 'LIVE NOW'}</span><h2>${esc(c.title)}</h2><p>${esc(c.desc)}</p>
+      ${c.song ? `<div class="song"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#222"/><circle cx="12" cy="12" r="4" fill="#ff2d6f"/></svg><span>${esc(c.song)}</span></div>` : ''}
+      <span class="why"></span><br>${c.soon ? `<button type="button" class="cta soon" data-want>✋ I want this</button>` : `<a class="cta" href="${esc(c.cta)}" data-try>${esc(c.ctaLabel || 'Try it now')} →</a>`}</div>
+      <div class="rail"><button type="button" class="lv" aria-label="Love"><span class="ic"><svg viewBox="0 0 24 24"><path d="${HEART}"/></svg></span><span class="n"></span></button>
+      <button type="button" class="sh" aria-label="Share"><span class="ic"><svg viewBox="0 0 24 24"><path d="M14 4l7 7-7 7v-4c-5 0-8.5 1.6-11 5 1-5 4-10 11-11V4z"/></svg></span><span>Share</span></button></div>
+      <div class="prog"><b></b></div>`;
+  }
+  function add(c) {
+    const el = document.createElement('section'); el.className = 'slide'; el.dataset.id = c.id; el.innerHTML = slideHTML(c);
+    feed.appendChild(el); slides.push({ c, el, v: el.querySelector('video'), t0: 0, watched: 0, counted: false }); io.observe(el); paintRail(slides[slides.length - 1]);
+  }
+  function rebuild() {
+    feed.innerHTML = ''; slides = []; cur = -1;
+    order = rank(pool()); order.forEach(add); feed.scrollTop = 0;
+    setTimeout(() => activate(0), 60);
+  }
+  // after every swipe: re-rank what hasn't been shown yet, and keep the feed endless
+  function rerankAhead() {
+    const ahead = slides.slice(cur + 1);
+    if (ahead.length < 3) { rank(pool()).slice(0, 6).forEach(add); return; }
+    const want = rank(ahead.map((s) => s.c));
+    ahead.forEach((s, i) => {
+      if (s.c === want[i]) return;
+      const keep = s.el; const nc = want[i];
+      s.c = nc; keep.dataset.id = nc.id; keep.innerHTML = slideHTML(nc); s.v = keep.querySelector('video'); s.counted = false; s.watched = 0; paintRail(s);
+    });
+  }
+
+  // ---------- playing ----------
+  const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting && e.intersectionRatio > 0.6) activate(slides.findIndex((s) => s.el === e.target)); }, { root: feed, threshold: [0.6] });
+  function load(s) { if (s && !s.v.src) { s.v.src = s.v.dataset.src; s.v.preload = 'auto'; } }
+  function leave(s) {
+    if (!s) return;
+    s.v.pause();
+    const d = s.v.duration || 9, secs = s.watched;
+    if (secs > 0.6) {
+      const r = st(s.c.id); r.v++; r.last = ++M.n;
+      const frac = Math.min(3, secs / d); r.w += frac; if (frac < 0.25) r.s++; if (frac >= 1) r.f++;
+      bump(s.c, frac >= 1 ? 0.6 : frac >= 0.5 ? 0.25 : frac < 0.25 ? -0.35 : 0);
+      save();
+    }
+    s.watched = 0;
+  }
+  function activate(i) {
+    if (i < 0 || i === cur) return;
+    leave(slides[cur]); cur = i;
+    const s = slides[i]; if (!s) return;
+    load(s); load(slides[i + 1]);
+    s.el.classList.remove('paused');
+    s.v.currentTime = 0; const p = s.v.play(); if (p && p.catch) p.catch(() => s.el.classList.add('paused'));
+    $('#bgblur').style.backgroundImage = `url("${s.c.poster}")`;
+    const w = why(s.c); s.el.querySelector('.why').textContent = w ? '✨ ' + w : '';
+    rerankAhead();
+    try { history.replaceState(null, '', '#' + s.c.id); } catch {}
+  }
+  let lastT = performance.now();
+  (function tick(t) {
+    const s = slides[cur], dt = Math.min(0.25, (t - lastT) / 1000); lastT = t;
+    if (s && !s.v.paused && !document.hidden) { s.watched += dt; const b = s.el.querySelector('.prog b'); if (b && s.v.duration) b.style.width = (s.v.currentTime / s.v.duration * 100) + '%'; }
+    requestAnimationFrame(tick);
+  })(lastT);
+  document.addEventListener('visibilitychange', () => { const s = slides[cur]; if (!s) return; if (document.hidden) s.v.pause(); else if (!s.el.classList.contains('paused')) s.v.play().catch(() => {}); });
+
+  // ---------- taps: pause, double-tap love, love, share, try, want ----------
+  function paintRail(s) { const r = st(s.c.id), b = s.el.querySelector('.lv'); b.classList.toggle('on', r.l > 0); b.querySelector('.n').textContent = r.l ? String(r.l) : 'Love'; const w = s.el.querySelector('[data-want]'); if (w && r.k) { w.classList.add('done'); w.textContent = '✓ You voted for this'; } }
+  function love(s, x, y) {
+    const r = st(s.c.id); r.l++; bump(s.c, 1.2); save(); paintRail(s);
+    const b = s.el.querySelector('.lv'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+    if (x != null) { const h = document.createElement('div'); h.className = 'big'; const rc = s.el.getBoundingClientRect(); h.style.left = (x - rc.left) + 'px'; h.style.top = (y - rc.top) + 'px'; h.innerHTML = `<svg viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9a3d"/><stop offset=".5" stop-color="#ff2d6f"/><stop offset="1" stop-color="#c13cff"/></linearGradient></defs><path fill="url(#g)" d="${HEART}"/></svg>`; s.el.appendChild(h); setTimeout(() => h.remove(), 950); }
+    toast(r.l > 1 ? `♥ ${r.l} loves. More like this coming up` : '♥ Loved. More like this coming up');
+    rerankAhead();
+  }
+  let tapT = null, lastTap = 0;
+  feed.addEventListener('click', (e) => {
+    const s = slides.find((x) => x.el.contains(e.target)); if (!s) return;
+    if (e.target.closest('.lv')) { love(s); return; }
+    if (e.target.closest('.sh')) { share(s); return; }
+    if (e.target.closest('[data-try]')) { const r = st(s.c.id); r.k++; bump(s.c, 1); save(); return; }
+    if (e.target.closest('[data-want]')) { const r = st(s.c.id); if (!r.k) { r.k++; bump(s.c, 1); save(); paintRail(s); toast('✋ Vote counted. We build what you want first'); } return; }
+    if (e.target.closest('.cap a, .tabs')) return;
+    const now = Date.now();
+    if (now - lastTap < 300) { clearTimeout(tapT); lastTap = 0; love(s, e.clientX, e.clientY); return; }
+    lastTap = now;
+    tapT = setTimeout(() => { if (s.v.paused) { s.v.play().catch(() => {}); s.el.classList.remove('paused'); } else { s.v.pause(); s.el.classList.add('paused'); } }, 300);
+  });
+  async function share(s) {
+    const url = location.origin + '/demo.html#' + s.c.id, text = `${s.c.title} on Ibiza, the free AI DJ`;
+    try { if (navigator.share) { await navigator.share({ title: 'Ibiza', text, url }); return; } } catch { return; }
+    try { await navigator.clipboard.writeText(url); toast('Link copied'); } catch { toast(url); }
+  }
+  function toast(t) { const o = $('.toast'); if (o) o.remove(); const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 3000); }
+  document.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); feed.scrollBy({ top: innerHeight, behavior: 'smooth' }); } if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); feed.scrollBy({ top: -innerHeight, behavior: 'smooth' }); } if (e.key === 'l') { const s = slides[cur]; if (s) love(s); } });
+  document.querySelector('.tabs').addEventListener('click', (e) => { const b = e.target.closest('[data-f]'); if (!b || b.dataset.f === filter) return; filter = b.dataset.f; document.querySelectorAll('.tabs button').forEach((x) => x.classList.toggle('on', x === b)); leave(slides[cur]); rebuild(); });
+
+  // ---------- start: a shared link (#clip) opens on that clip first ----------
+  const first = location.hash.slice(1);
+  rebuild();
+  if (first) { const i = slides.findIndex((s) => s.c.id === first); if (i > 0) { const [x] = slides.splice(i, 1); feed.insertBefore(x.el, feed.firstChild); slides.unshift(x); setTimeout(() => { cur = -1; activate(0); }, 80); } }
+  if (!M.hinted) { M.hinted = 1; save(); const h = document.createElement('div'); h.className = 'hint'; h.innerHTML = '<b>☝️</b> Swipe up for the next one'; document.body.appendChild(h); setTimeout(() => h.remove(), 3100); }
+})();
+</script>
+</body>
+</html>
