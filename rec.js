@@ -13,7 +13,11 @@ const log = (...a) => { const s = a.join(' '); console.log(s); manifest.log.push
 const save = () => fs.writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 1));
 fs.writeFileSync(path.join(__dirname, 'public', 'index.html'), '<!doctype html><title>rec</title><a href="/rec/manifest.json">manifest</a>');
 save();
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const realWait = (ms) => new Promise((r) => setTimeout(r, ms));
+// virtual clock: while a clip records in VT mode, waits inside the clip follow the page's virtual time
+const VT = { on: false, now: 0, q: [] };
+const wait = (ms) => { if (!VT.on) return realWait(ms); return new Promise((r) => VT.q.push({ at: VT.now + ms, r })); };
+const MODE = process.env.REC_MODE || 'vt', FPS = +(process.env.REC_FPS || 24);
 const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
 
 (async () => {
@@ -25,7 +29,16 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
     ffmpeg = require('ffmpeg-static'); ({ put } = require('@vercel/blob'));
   } catch (e) { log('deps', e.message); save(); return; }
   const hasBlob = !!process.env.BLOB_READ_WRITE_TOKEN; log('blob token present:', hasBlob);
-  try { fs.mkdirSync('/tmp/fonts', { recursive: true }); const r = await fetch('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoColorEmoji.ttf'); fs.writeFileSync('/tmp/fonts/NotoColorEmoji.ttf', Buffer.from(await r.arrayBuffer())); log('emoji font', r.status, fs.statSync('/tmp/fonts/NotoColorEmoji.ttf').size); } catch (e) { log('emoji font', String(e)); }
+  try {
+    fs.mkdirSync('/tmp/fonts', { recursive: true });
+    const dst = '/tmp/fonts/NotoColorEmoji.ttf';
+    try { execFileSync('sh', ['-c', 'dnf install -y -q google-noto-emoji-color-fonts >/dev/null 2>&1; f=$(find /usr/share/fonts -iname "*NotoColorEmoji*.ttf" | head -1); [ -n "$f" ] && cp "$f" ' + dst], { timeout: 120000 }); } catch {}
+    for (const u of ['https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf', 'https://cdn.jsdelivr.net/gh/googlefonts/noto-emoji@main/fonts/NotoColorEmoji.ttf', 'https://github.com/googlefonts/noto-emoji/raw/v2.047/fonts/NotoColorEmoji.ttf']) {
+      if (fs.existsSync(dst) && fs.statSync(dst).size > 1e6) break;
+      try { const r = await fetch(u); if (r.ok) fs.writeFileSync(dst, Buffer.from(await r.arrayBuffer())); log('emoji try', u, r.status); } catch (e) { log('emoji try', u, String(e)); }
+    }
+    log('emoji font size', fs.existsSync(dst) ? fs.statSync(dst).size : 0);
+  } catch (e) { log('emoji font', String(e)); }
   let browser;
   const launch = async () => {
     browser = await puppeteer.launch({
@@ -86,20 +99,44 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
   async function record(page, id, secs, during) {
     const cdp = await page.target().createCDPSession();
     const frames = [];
-    cdp.on('Page.screencastFrame', async (f) => { frames.push({ t: f.metadata.timestamp, d: f.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch {} });
-    await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 72, maxWidth: 600, maxHeight: 1300, everyNthFrame: 1 });
-    const t0 = Date.now() / 1000;
-    try { if (during) await Promise.race([during(), wait(secs * 1000 + 4000)]); } catch (e) { log('  during err', e.message); }
-    const left = secs - (Date.now() / 1000 - t0); if (left > 0) await wait(left * 1000);
-    const tEnd = Date.now() / 1000;
-    await cdp.send('Page.stopScreencast').catch(() => {}); await cdp.detach().catch(() => {});
+    let t0, tEnd;
+    if (MODE === 'vt') {
+      // deterministic capture: pause the page's clock, step it 1/FPS s at a time, screenshot each step
+      await cdp.send('Emulation.setVirtualTimePolicy', { policy: 'pause' });
+      VT.on = true; VT.now = 0; VT.q = [];
+      const step = 1000 / FPS, n = Math.round(secs * FPS);
+      const dur = during ? Promise.resolve().then(during).catch((e) => log('  during err', e.message)) : null;
+      for (let i = 0; i < n; i++) {
+        const expired = new Promise((r) => cdp.once('Emulation.virtualTimeBudgetExpired', r));
+        await cdp.send('Emulation.setVirtualTimePolicy', { policy: 'advance', budget: step });
+        await Promise.race([expired, realWait(4000)]);
+        VT.now += step;
+        const due = VT.q.filter((x) => x.at <= VT.now); VT.q = VT.q.filter((x) => x.at > VT.now); due.forEach((x) => x.r());
+        if (due.length) await realWait(60); // let the clip's action (tap/scroll) land before the shot
+        const sh = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 74, optimizeForSpeed: true }).catch(() => null);
+        if (sh) frames.push({ t: i / FPS, d: sh.data });
+      }
+      VT.on = false; VT.q.forEach((x) => x.r()); VT.q = [];
+      await cdp.send('Emulation.setVirtualTimePolicy', { policy: 'advance' }).catch(() => {});
+      t0 = 0; tEnd = n / FPS;
+      if (dur) await Promise.race([dur, realWait(3000)]);
+    } else {
+      cdp.on('Page.screencastFrame', async (f) => { frames.push({ t: f.metadata.timestamp, d: f.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch {} });
+      await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 72, maxWidth: 600, maxHeight: 1300, everyNthFrame: 1 });
+      t0 = Date.now() / 1000;
+      try { if (during) await Promise.race([during(), wait(secs * 1000 + 4000)]); } catch (e) { log('  during err', e.message); }
+      const left = secs - (Date.now() / 1000 - t0); if (left > 0) await wait(left * 1000);
+      tEnd = Date.now() / 1000;
+      await cdp.send('Page.stopScreencast').catch(() => {});
+    }
+    await cdp.detach().catch(() => {});
     if (frames.length < 3) throw new Error('only ' + frames.length + ' frames');
     const dir = fs.mkdtempSync('/tmp/f-'); let list = '';
     frames.forEach((f, i) => { const p = path.join(dir, String(i).padStart(5, '0') + '.jpg'); fs.writeFileSync(p, Buffer.from(f.d, 'base64')); const next = i + 1 < frames.length ? frames[i + 1].t : Math.max(f.t + 0.05, tEnd); list += `file '${p}'\nduration ${Math.max(0.02, Math.min(2, next - f.t)).toFixed(3)}\n`; });
     list += `file '${path.join(dir, String(frames.length - 1).padStart(5, '0') + '.jpg')}'\n`;
     fs.writeFileSync(path.join(dir, 'list.txt'), list);
     const mp4 = path.join(OUT, id + '.mp4'), jpg = path.join(OUT, id + '.jpg'), sheet = path.join(OUT, id + '.sheet.jpg');
-    execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(dir, 'list.txt'), '-vf', 'scale=540:-2:flags=lanczos,fps=30,format=yuv420p', '-c:v', 'libx264', '-preset', 'medium', '-crf', '27', '-profile:v', 'high', '-movflags', '+faststart', '-an', mp4]);
+    execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', path.join(dir, 'list.txt'), '-vf', 'scale=540:-2:flags=lanczos,fps=' + (MODE === 'vt' ? FPS : 30) + ',format=yuv420p', '-c:v', 'libx264', '-preset', 'medium', '-crf', '27', '-profile:v', 'high', '-movflags', '+faststart', '-an', mp4]);
     execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-ss', '1.2', '-i', mp4, '-frames:v', '1', '-vf', 'scale=360:-2', '-q:v', '5', jpg]);
     execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-i', mp4, '-vf', `fps=${(5 / secs).toFixed(3)},scale=200:-2,tile=5x1`, '-frames:v', '1', '-q:v', '6', sheet]);
     fs.writeFileSync(sheet + '.b64.txt', fs.readFileSync(sheet).toString('base64'));
