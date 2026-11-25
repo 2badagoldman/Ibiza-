@@ -109,7 +109,8 @@ const CONCEPTS = fs.readFileSync(path.join(__dirname, 'concepts.js'), 'utf8');
       for (let i = 0; i < n; i++) {
         const expired = new Promise((r) => cdp.once('Emulation.virtualTimeBudgetExpired', r));
         await cdp.send('Emulation.setVirtualTimePolicy', { policy: 'advance', budget: step });
-        await Promise.race([expired, realWait(4000)]);
+        const ts = Date.now(); const got = await Promise.race([expired.then(() => 1), realWait(700).then(() => 0)]);
+        if (i < 3 || i % 48 === 0) log('  vt step', i, got ? 'expired' : 'timeout', Date.now() - ts + 'ms');
         VT.now += step;
         const due = VT.q.filter((x) => x.at <= VT.now); VT.q = VT.q.filter((x) => x.at > VT.now); due.forEach((x) => x.r());
         if (due.length) await realWait(60); // let the clip's action (tap/scroll) land before the shot
