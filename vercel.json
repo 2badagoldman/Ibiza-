@@ -1,0 +1,1 @@
+{"framework":null,"installCommand":"npm i --no-audit --no-fund --no-save puppeteer-core@23.11.1 @sparticuz/chromium@131.0.1 ffmpeg-static@5.2.0 @vercel/blob@1.1.1","buildCommand":"node rec.js","outputDirectory":"public"}
