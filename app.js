@@ -54,7 +54,7 @@
     { id: 'ibiza', name: 'Ibiza', sub: 'The anthems the whole island knows', q: ['Ibiza Classics', 'Ibiza Anthems', 'Ibiza Hits', 'Ibiza 2026', 'Ibiza Closing Party'], n: 2, lim: 120, tracks: ["Mike Posner | I Took A Pill In Ibiza", "Vengaboys | We're Going to Ibiza", "Swedish House Mafia | Miami 2 Ibiza", "Faithless | Insomnia", "Faithless | God Is a DJ", "Faithless | We Come 1", "Robin S | Show Me Love", "Stardust | Music Sounds Better with You", "Daft Punk | One More Time", "Eric Prydz | Call on Me", "Eric Prydz | Pjanoo", "Eric Prydz | Opus", "Swedish House Mafia | Don't You Worry Child", "Swedish House Mafia | One", "Swedish House Mafia | Greyhound", "Swedish House Mafia | Save the World", "Avicii | Levels", "Avicii | Wake Me Up", "Avicii | Hey Brother", "Avicii | Silhouettes", "Avicii | The Nights", "Calvin Harris | Feel So Close", "Calvin Harris | Summer", "Calvin Harris | One Kiss", "Calvin Harris | How Deep Is Your Love", "Calvin Harris | Blame", "Calvin Harris | Miracle", "Rihanna | We Found Love", "David Guetta | Titanium", "David Guetta | Memories", "David Guetta | Love Is Gone", "David Guetta | I'm Good (Blue)", "Bob Sinclar | Love Generation", "Bob Sinclar | World Hold On", "Bob Sinclar | Rock This Party", "Benny Benassi | Satisfaction", "Spiller | Groovejet", "Modjo | Lady (Hear Me Tonight)", "Fedde Le Grand | Put Your Hands Up for Detroit", "Mylo | Drop the Pressure", "Armand Van Helden | You Don't Know Me", "Armand Van Helden | My My My", "Ian Van Dahl | Castles in the Sky", "ATB | 9 PM (Till I Come)", "Darude | Sandstorm", "Energy 52 | Café del Mar", "Sash! | Ecuador", "Alice Deejay | Better Off Alone", "Chicane | Saltwater", "Paul van Dyk | For an Angel", "Tiësto | Adagio for Strings", "Tiësto | Red Lights", "Tiësto | The Business", "Tiësto | The Motto", "Fatboy Slim | Right Here, Right Now", "Fatboy Slim | Praise You", "Underworld | Born Slippy", "The Shapeshifters | Lola's Theme", "Supermode | Tell Me Why", "Axwell | I Found U", "Axwell Λ Ingrosso | More Than You Know", "Sebastian Ingrosso | Reload", "Alesso | Heroes", "Hardwell | Spaceman", "Martin Garrix | Animals", "Martin Solveig | Hello", "Martin Solveig | Intoxicated", "Kungs | This Girl", "Robin Schulz | Prayer in C", "Lost Frequencies | Are You with Me", "Felix Jaehn | Ain't Nobody", "Duke Dumont | Need U (100%)", "Duke Dumont | Ocean Drive", "Disclosure | Latch", "Disclosure | You & Me", "Gorgon City | Ready for Your Love", "Route 94 | My Love", "Sigma | Nobody to Love", "Clean Bandit | Rather Be", "MK | 17", "Kygo | Firestone", "Fisher | Losing It", "Fisher | Yeah the Girls", "Chris Lake | Turn Off the Lights", "John Summit | Where You Are", "Fred again.. | Delilah (pull me out of this)", "Fred again.. | Marea (we've lost dancing)", "Peggy Gou | (It Goes Like) Nanana", "Purple Disco Machine | Hypnotized", "Purple Disco Machine | In the Dark", "Black Coffee | Drive", "Meduza | Piece of Your Heart", "Meduza | Lose Control", "CamelPhat | Cola", "Dom Dolla | Rhyme Dust", "Mau P | Drugs from Amsterdam", "Deadmau5 | Strobe", "Deadmau5 | Ghosts 'n' Stuff", "Basement Jaxx | Where's Your Head At", "Basement Jaxx | Romeo", "Groove Armada | Superstylin'", "Groove Armada | At the River", "Roger Sanchez | Another Chance", "Mousse T. | Horny '98", "Ultra Naté | Free", "Crystal Waters | Gypsy Woman", "Cassius | 1999", "Dimitri Vegas & Like Mike | Tremor", "Dimitri Vegas & Like Mike | Mammoth", "Joel Corry | Head & Heart", "Acraze | Do It To It", "Riton | Friday", "Jax Jones | You Don't Know Me", "Shouse | Love Tonight", "Sonique | It Feels So Good", "Lil Louis | French Kiss", "Inner City | Good Life", "Frankie Knuckles | Your Love", "The Prodigy | Out of Space", "Zombie Nation | Kernkraft 400", "Sophie Ellis-Bextor | Murder on the Dancefloor", "Klingande | Jubel", "Lana Del Rey | Summertime Sadness", "Ofenbach | Be Mine", "Becky Hill | Remember", "Cassö | Prada", "Gala | Freed from Desire", "Eiffel 65 | Blue (Da Ba Dee)", "Mr. Oizo | Flat Beat", "Daft Punk | Around the World", "Daft Punk | Harder, Better, Faster, Stronger", "Kanye West | Stronger", "Ellie Goulding | Lights", "Calvin Harris | Outside", "Eric Prydz | Every Day", "Tiësto | Traffic", "Swedish House Mafia | Moth to a Flame", "Avicii | Fade Into Darkness", "Cascada | Everytime We Touch", "Bodyrox | Yeah Yeah", "Wankelmut | My Head Is a Jungle", "Gesaffelstein | Pursuit", "Bicep | Glue", "Bicep | Apricots", "Solomun | Customer Is King", "Adam Beyer | Your Mind", "Charlotte de Witte | Doppler", "Amelie Lens | Feel It", "Keinemusik | Move", "&ME | The Rapture Pt.III", "Rampa | Les Gout", "Black Coffee | Superman", "Anyma | Eternity", "Tale Of Us | Nova", "Michael Bibi | Hanging Tree", "Jamie Jones | My Paradise", "Hot Since 82 | Buggin'", "Patrick Topping | Be Sharp Say Nowt", "Paco Osuna | Asi", "Joris Voorn | Ringo", "Chris Stussy | Desire", "Prospa | Want Need Love", "Sammy Virji | If U Need It", "Interplanetary Criminal | Slow Burner", "Notion | Fourth Dimension", "Ewan McVicar | Tell Me Something Good", "Jengi | Bel Mercy", "Calvin Harris | Desire", "Sonny Fodera | Mind Still", "Dennis Ferrer | Hey Hey", "Bob Moses | Tearing Me Up", "Kölsch | Grey", "Röyksopp | Eple", "Moby | Porcelain", "Café del Mar | Café del Mar", "José Padilla | Solito", "Bent | Magic Love", "Afterlife | Dub Mental"], tracksWord: 'Ibiza anthems', c: ['#ff9a3d', '#00c2ff'] },
     { id: 'blends', name: 'King of Blends', sub: 'Vocal blends, back to back', g: [2], q: ['TikTok Viral', 'Afrobeats Hits', 'Amapiano Hits', 'Pop Hits'], lim: 120, king: true, c: ['#ffcf3f', '#ff3d77'] },
     { id: 'tiktok', name: 'TikTok Viral', sub: 'The top viral sounds', q: ['TikTok Viral', 'Viral TikTok Hits', 'TikTok Hits', 'TikTok Songs', 'TikTok Trends'], n: 2, lim: 200, c: ['#25f4ee', '#fe2c55'] },
-    { id: 'afrobeats', name: 'Afrobeats', sub: 'Lagos to London', g: [2], q: ['Afrobeats Hits', 'Naija Hits'], tracks: ["Suono Sai | Igbo Boy", "Suono Sai | Para Boy", "Suono Sai | THE MAKER", "Burna Boy | Last Last", "Wizkid | Essence", "Davido | Fall", "Rema | Calm Down", "Tems | Free Mind", "Ayra Starr | Rush", "Tiwa Savage | Koroba", "2Baba | African Queen", "D'banj | Oliver Twist", "Asake | Lonely At The Top", "Burna Boy | Ye", "Wizkid | Ojuelegba", "Davido | If", "Rema | Dumebi", "Tems | Me & U", "Ayra Starr | Sability", "Tiwa Savage | Somebody's Son", "2Baba | Implication", "D'banj | Fall in Love", "Asake | Terminator", "Burna Boy | On the Low", "Wizkid | Joro", "Davido | Assurance", "Rema | Charm", "Tems | Love Me JeJe", "Ayra Starr | Bloody Samaritan", "Tiwa Savage | All Over", "Asake | Sungba", "Burna Boy | Anybody", "Wizkid | Come Closer", "Davido | Unavailable", "Rema | Ozeba", "Ayra Starr | Commas", "Tiwa Savage | Kele Kele Love", "Asake | Joha", "Burna Boy | City Boys", "Wizkid | Soco", "Davido | FEM", "Rema | HEHEHE", "Tems | Higher", "Ayra Starr | Last Heartbreak Song", "D'banj | Why Me", "Burna Boy | Kilometre", "Wizkid | Bad To Me", "Davido | Skelewu", "Davido | Aye", "Davido | Dami Duro", "Burna Boy | Gbona", "Wizkid | Fever", "Burna Boy | For My Hand", "Davido | Feel", "Asake | Peace Be Unto You", "Tyla | Water", "CKay | Love Nwantiti", "Fireboy DML | Peru", "Kizz Daniel | Buga", "Omah Lay | Godly", "Omah Lay | soso", "P-Square | Personally", "P-Square | Do Me", "Flavour | Ada Ada", "Flavour | Nwa Baby", "Shallipopi | Elon Musk", "Seyi Vibez | Different Pattern", "Olamide | Science Student", "Wande Coal | Iskaba", "Mr Eazi | Leg Over", "Yemi Alade | Johnny", "Simi | Duduke", "Adekunle Gold | High", "Victony | Soweto", "Ruger | Asiwaju", "BNXN | Gwagwalada"], boostN: 3, boostArtists: [[244614492, 'Zaylevelten'], [133557012, 'Zen Univrse'], [278268331, '1Drag']], tracksWord: 'Afrobeats anthems', c: ['#ff9a3c', '#2ecc71'] },
+    { id: 'afrobeats', name: 'Afrobeats', sub: 'Lagos to London', g: [2], q: ['Afrobeats Hits', 'Naija Hits'], tracks: ["Suono Sai | Igbo Boy", "Suono Sai | Para Boy", "Suono Sai | THE MAKER", "Burna Boy | Last Last", "Wizkid | Essence", "Davido | Fall", "Rema | Calm Down", "Tems | Free Mind", "Ayra Starr | Rush", "Tiwa Savage | Koroba", "2Baba | African Queen", "2Baba | I Sing", "D'banj | Oliver Twist", "Asake | Lonely At The Top", "Burna Boy | Ye", "Wizkid | Ojuelegba", "Davido | If", "Rema | Dumebi", "Tems | Me & U", "Ayra Starr | Sability", "Tiwa Savage | Somebody's Son", "2Baba | Implication", "2Baba | True Love", "2Baba | Only Me", "2Baba | Rainbow", "2Baba | Amaka", "2Baba | E Be Like Say", "2Baba | Nfana Ibaga", "2Baba | For Instance", "D'banj | Fall in Love", "Asake | Terminator", "Burna Boy | On the Low", "Wizkid | Joro", "Davido | Assurance", "Rema | Charm", "Tems | Love Me JeJe", "Ayra Starr | Bloody Samaritan", "Tiwa Savage | All Over", "Asake | Sungba", "Burna Boy | Anybody", "Wizkid | Come Closer", "Davido | Unavailable", "Rema | Ozeba", "Ayra Starr | Commas", "Tiwa Savage | Kele Kele Love", "Asake | Joha", "Burna Boy | City Boys", "Wizkid | Soco", "Davido | FEM", "Rema | HEHEHE", "Tems | Higher", "Ayra Starr | Last Heartbreak Song", "D'banj | Why Me", "Burna Boy | Kilometre", "Wizkid | Bad To Me", "Davido | Skelewu", "Davido | Aye", "Davido | Dami Duro", "Burna Boy | Gbona", "Wizkid | Fever", "Burna Boy | For My Hand", "Davido | Feel", "Asake | Peace Be Unto You", "Tyla | Water", "CKay | Love Nwantiti", "Fireboy DML | Peru", "Kizz Daniel | Buga", "Omah Lay | Godly", "Omah Lay | soso", "P-Square | Personally", "P-Square | Do Me", "Flavour | Ada Ada", "Flavour | Nwa Baby", "Shallipopi | Elon Musk", "Seyi Vibez | Different Pattern", "Olamide | Science Student", "Wande Coal | Iskaba", "Mr Eazi | Leg Over", "Yemi Alade | Johnny", "Simi | Duduke", "Adekunle Gold | High", "Victony | Soweto", "Ruger | Asiwaju", "BNXN | Gwagwalada"], boostN: 3, boostArtists: [[244614492, 'Zaylevelten'], [133557012, 'Zen Univrse'], [278268331, '1Drag']], tracksWord: 'Afrobeats anthems', c: ['#ff9a3c', '#2ecc71'] },
     // the greatest Igbo songs of all time: highlife legends, Afrobeats stars and the new wave
     { id: 'igbo', name: 'Igbo', sub: 'Greatest Igbo songs, legends to new acts', tracks: ["Chief Stephen Osita Osadebe | Osondi Owendi", "Flavour | Ada Ada", "Phyno | Fada Fada", "Oliver De Coque | Biri Ka Mbiri", "Flavour | Nwa Baby", "Phyno | Alobam", "Bright Chimezie | Because of English", "Celestine Ukwu | Ilo Abu Chi", "Prince Nico Mbarga | Sweet Mother", "Flavour | Golibe", "Phyno | Connect", "Kcee | Limpopo", "Flavour | Ijele", "Phyno | Ride For You", "Psquare | Chop My Money", "Duncan Mighty | Obianuju", "Chidinma | Kedike", "J. Martins | Good or Bad", "Flavour | Baby Oku", "Phyno | Augment", "Zoro | Achikolo", "Umu Obiligbo | Culture", "Spyki | Ebere", "Suono Sai | Igbo Boy", "Zaylevelten | Tease Me", "Flavour | Chinedum", "Phyno | Man of the Year", "Kcee | Ojapiano", "Chike | Egwu", "Jeriq | Remember", "Flavour | Ololufe", "Phyno | Financial Woman", "Chief Stephen Osita Osadebe | Nwanem Ebezina", "Oliver De Coque | Nwanne Di Na Mba", "Celestine Ukwu | Ije Enu", "Bright Chimezie | African Style", "Flavour | Sake of Love", "Phyno | O Set", "Umu Obiligbo | Anwuli", "Zoro | Ogene", "Suono Sai | Super Power", "Zaylevelten | Wuse Tu", "Flavour | Big Baller", "Phyno | Deal With It", "Kcee | Erima", "Flavour | Levels", "Phyno | Ndewo", "Zoro | African Girl Bad", "Jeriq | Bondage", "Suono Sai | Gidigba", "Flavour | Most High", "Phyno | Nwa Aturu", "Umu Obiligbo | Udo Ga Adi", "Chief Stephen Osita Osadebe | Aye Mama", "Oliver De Coque | Akuchinyere Nwata", "Celestine Ukwu | Igede", "Flavour | OVAMI", "Phyno | Ikepentecost", "Kcee | Cultural Praise", "Zoro | Settings", "Zaylevelten | Pawon", "Flavour | Uzo Ano", "Phyno | Ije Enu", "Umu Obiligbo | Nwalie", "Odumeje | Powers", "Flavour | Pansa Pansa", "Zoro | Stainless"], c: ['#f5b700', '#c1121f'] },
     { id: 'amapiano', name: 'Amapiano', sub: 'Log drums all night', q: ['Amapiano Hits', 'Amapiano'], c: ['#f7c948', '#e8553b'] },
@@ -270,6 +270,14 @@
     };
   }
 
+  // a video picked straight from YouTube search: plays as-is, skips Deezer/BPM analysis entirely
+  function trackFromYt(v, extra = {}) {
+    return {
+      id: 'yt' + v.id, ytId: v.id, title: v.title, artist: v.channel, cover: v.thumb,
+      duration: 240, rank: 0, source: 'yt', explicit: false, ...extra,
+    };
+  }
+
   async function poolLimit(items, n, fn) {
     const out = []; let i = 0;
     await Promise.all(Array.from({ length: n }, async () => { while (i < items.length) { const k = i++; try { out[k] = await fn(items[k]); } catch { out[k] = null; } } }));
@@ -390,6 +398,16 @@
   }
 
   async function analyzeTrack(t) {
+    // picked straight from YouTube search: no Deezer match to analyze, so skip beat
+    // analysis and give it neutral BPM/energy/key so the now-playing UI and sequencing
+    // (which both read t.f) still work; it just won't beat-match into the mix.
+    if (t.source === 'yt') {
+      if (S.mode !== 'youtube') throw new Error('YouTube search results only play in YouTube mode');
+      t.f = t.f || { bpm: 120, rmsDb: -15, energy: 0.5, beatOffset: 0, beatStrength: 0, camelot: '', key: '' };
+      t.gain = t.gain == null ? 1 : t.gain;
+      S.energies.push(t.f.energy);
+      return;
+    }
     await resolveDeezer(t);
     if (S.mode === 'spotify' && !t.spotifyUri) {
       const uri = await SP.findUri(t);
@@ -1813,16 +1831,19 @@ body[data-king="1"] .booth:before{background:radial-gradient(600px 160px at 50% 
   function songRow(i, title, artist, cover, tag) {
     return `<button data-song="${i}"><img loading="lazy" src="${esc(cover || '')}" alt=""><div><b>${esc(title)}</b><span>${esc(artist)}</span></div><em>${tag}</em></button>`;
   }
-  function drawSongs(q, extra) {
+  function drawSongs(q, extra, yt) {
     const box = $('#song-res');
     const mine = poolSongs(q).slice(0, 600);
     const seen = new Set(mine.map((t) => songKey(t.title, t.artist)));
     const more = (extra || []).filter((t) => t.preview && !seen.has(songKey(t.title_short || t.title, t.artist && t.artist.name)) && seen.add(songKey(t.title_short || t.title, t.artist && t.artist.name)));
-    songHits = mine.map((t) => ({ pool: t })).concat(more.map((t) => ({ raw: t })));
+    // any video the user picks straight off YouTube search, including ones with no match on Deezer
+    const ytHits = (yt || []).map((v) => ({ pool: addToPool(trackFromYt(v)) }));
+    songHits = mine.map((t) => ({ pool: t })).concat(more.map((t) => ({ raw: t }))).concat(ytHits);
     const head = mine.length ? `<div class="song-head">${q ? 'In this DJ' : `All ${mine.length} songs in this DJ`}</div>` : '';
     const rows = mine.map((t, i) => songRow(i, t.title, t.artist, t.cover, S.nowT === t ? 'Playing' : 'Play next'));
     const rows2 = more.map((t, j) => songRow(mine.length + j, t.title_short || t.title, t.artist && t.artist.name, t.album && t.album.cover_small, 'Play next'));
-    box.innerHTML = head + rows.join('') + (rows2.length ? `<div class="song-head">More songs</div>${rows2.join('')}` : '')
+    const rows3 = ytHits.map(({ pool: t }, k) => songRow(mine.length + more.length + k, t.title, t.artist, t.cover, 'Play next'));
+    box.innerHTML = head + rows.join('') + (rows2.length ? `<div class="song-head">More songs</div>${rows2.join('')}` : '') + (rows3.length ? `<div class="song-head">From YouTube</div>${rows3.join('')}` : '')
       || (S.pool.size ? '<div class="dim pad">No songs found. Try another spelling.</div>' : '<div class="dim pad">Press Start and every song in this DJ shows up here.</div>');
     box.hidden = false;
   }
@@ -1832,10 +1853,17 @@ body[data-king="1"] .booth:before{background:radial-gradient(600px 160px at 50% 
     drawSongs(q);
     if (q.length < 2) return;
     songT = setTimeout(async () => {
-      try {
-        const r = await dz('/search', { q, limit: 10 });
-        if (n === songN) drawSongs(q, r.data || []);
-      } catch {}
+      // search Deezer's catalog as before, plus — in YouTube mode — a free-text YouTube
+      // search so people can find and play any video, not just what's in the catalog
+      const wantYt = S.mode === 'youtube' && YTM.available();
+      const [dzRes, ytRes] = await Promise.allSettled([
+        dz('/search', { q, limit: 10 }),
+        wantYt ? fetch('/api/yt-search?' + new URLSearchParams({ q }).toString()).then((r) => r.json()) : Promise.resolve(null),
+      ]);
+      if (n !== songN) return;
+      const extra = dzRes.status === 'fulfilled' ? dzRes.value.data || [] : [];
+      const yt = ytRes.status === 'fulfilled' && ytRes.value ? ytRes.value.items || [] : [];
+      drawSongs(q, extra, yt);
     }, 250);
   }
   async function queueSong(raw, extra) {
